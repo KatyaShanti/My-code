@@ -1,0 +1,30 @@
+id: src-20260731-dna-proekta-finansovoe-nastavnichestvo
+url: https://app.notion.com/p/39e310064bc481e88967f552db43f6a8
+canonical_url: https://app.notion.com/p/39e310064bc481e88967f552db43f6a8
+type: docs
+title: 'ДНК ПРОЕКТА: Финансовое наставничество Кати Шанти'
+authors: [{name: "Катя Шанти", affiliation: "основатель"}]
+published: 2026-07-31
+fetched_at: 2026-08-28T00:00:00Z
+language: ru
+fetch_method: manual-paste
+storage: {original: original.md, bytes: 0}
+relevance: 5
+quality: 9
+quality_breakdown:
+  primary_source: true
+  author_credible: true
+  has_math: true
+  has_empirics: true
+  reproducible: false
+  recent: true
+  cited: false
+  substance_over_disclaimer: true
+bias: {protocol_sponsored: false, marketing: false, notes: 'Собственный стратегический документ основателя, синтез 50+ переписок с клиентами.'}
+extracted:
+  notes: [n-produktovaya-lestnitsa-ot-verdikta-do-vip, n-radost-15-procentov-glavnyj-utp, n-kvota-4-5-klientov-v-mesyac]
+  claims: [c-0003, c-0004]
+  contradictions: []
+  outbound_links_tracked: 0
+status: processed
+reject_reason: null

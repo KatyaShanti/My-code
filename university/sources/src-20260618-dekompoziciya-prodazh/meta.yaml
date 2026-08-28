@@ -1,0 +1,30 @@
+id: src-20260618-dekompoziciya-prodazh
+url: https://app.notion.com/p/383310064bc4818aaba6def315f53066
+canonical_url: https://app.notion.com/p/383310064bc4818aaba6def315f53066
+type: docs
+title: 'Декомпозиция продаж'
+authors: [{name: "Катя Шанти"}]
+published: 2026-06-18
+fetched_at: 2026-08-28T00:00:00Z
+language: ru
+fetch_method: manual-paste
+storage: {original: original.md, bytes: 0}
+relevance: 5
+quality: 7
+quality_breakdown:
+  primary_source: true
+  author_credible: true
+  has_math: true
+  has_empirics: true
+  reproducible: false
+  recent: false
+  cited: false
+  substance_over_disclaimer: true
+bias: {protocol_sponsored: false, marketing: false, notes: 'Замер от 2026-06-18, устарел на момент этой сессии (2026-08) — Instagram в тот период был заблокирован (см. текст источника). Требует переизмерения, см. contr-001.'}
+extracted:
+  notes: [n-uzkoe-mesto-tg-zayavka-2-protsenta, n-reels-tg-konversiya-prevyshaet-plan]
+  claims: [c-0011]
+  contradictions: [contr-001]
+  outbound_links_tracked: 0
+status: processed
+reject_reason: null

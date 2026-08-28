@@ -1,0 +1,30 @@
+id: src-20260807-pattern-reels-finprim
+url: https://app.notion.com/p/3b5310064bc481b1a8a1c03a0a64839d
+canonical_url: https://app.notion.com/p/3b5310064bc481b1a8a1c03a0a64839d
+type: docs
+title: 'Паттерн Reels с @fin.prim — таблицы/сравнения как топ-формат (из реальной сетки)'
+authors: [{name: "Claude (в диалоге с Катей)", affiliation: "на основе скриншотов Instagram Professional-панели, предоставленных Катей"}]
+published: 2026-08-07
+fetched_at: 2026-08-28T00:00:00Z
+language: ru
+fetch_method: manual-paste
+storage: {original: original.md, bytes: 0}
+relevance: 5
+quality: 9
+quality_breakdown:
+  primary_source: true
+  author_credible: true
+  has_math: true
+  has_empirics: true
+  reproducible: true
+  recent: true
+  cited: false
+  substance_over_disclaimer: true
+bias: {protocol_sponsored: false, marketing: false, notes: 'Данные — прямые скриншоты Instagram Professional-панели (первичные), интерпретация построена в этом же диалоге. Reproducible: true, т.к. Катя может открыть те же Reels в панели и перепроверить цифры.'}
+extracted:
+  notes: [n-mikrohuk-konvertiruet-v-3-raza-luchshe-flet-tablicy, n-tablica-s-syuzhetom-pochti-ravna-mikrohuku, n-lichnaya-istoriya-slabyj-ohvat-silnaya-konversiya, n-viralnyj-format-ne-ravno-celevaya-auditoriya]
+  claims: [c-0008, c-0009]
+  contradictions: []
+  outbound_links_tracked: 0
+status: processed
+reject_reason: null

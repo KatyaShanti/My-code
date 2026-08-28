@@ -1,0 +1,30 @@
+id: src-20260731-keisy-klientov
+url: https://app.notion.com/p/39b310064bc481d690f5ef57f892c340
+canonical_url: https://app.notion.com/p/39b310064bc481d690f5ef57f892c340
+type: docs
+title: 'Кейсы клиентов — реальные результаты'
+authors: [{name: "Катя Шанти"}]
+published: 2026-07-31
+fetched_at: 2026-08-28T00:00:00Z
+language: ru
+fetch_method: manual-paste
+storage: {original: original.md, bytes: 0}
+relevance: 5
+quality: 8
+quality_breakdown:
+  primary_source: true
+  author_credible: true
+  has_math: true
+  has_empirics: true
+  reproducible: false
+  recent: true
+  cited: false
+  substance_over_disclaimer: true
+bias: {protocol_sponsored: false, marketing: true, notes: 'Кейсы отобраны автором для маркетинга — не случайная выборка всех клиентов, а топ-результаты. Не понижаем сильно, т.к. цифры внутри конкретны и проверяемы у автора, но держим в уме отбор выживших.'}
+extracted:
+  notes: [n-lada-2-18-mln-economii-12-dnej, n-polina-1-mesyac-bystryj-rezultat]
+  claims: [c-0007]
+  contradictions: []
+  outbound_links_tracked: 1
+status: processed
+reject_reason: null

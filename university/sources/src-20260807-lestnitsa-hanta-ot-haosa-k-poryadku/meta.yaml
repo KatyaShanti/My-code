@@ -1,0 +1,30 @@
+id: src-20260807-lestnitsa-hanta-ot-haosa-k-poryadku
+url: https://app.notion.com/p/3b5310064bc48176bccdcb6bb46e23d7
+canonical_url: https://app.notion.com/p/3b5310064bc48176bccdcb6bb46e23d7
+type: docs
+title: 'Лестница Ханта · Катя Шанти · «От хаоса к порядку»'
+authors: [{name: "сотрудник Кати (по методологии Vlad Yasko + hunt-ladder skill)", affiliation: "фин.наставничество"}]
+published: 2026-08-07
+fetched_at: 2026-08-28T00:00:00Z
+language: ru
+fetch_method: manual-paste
+storage: {original: original.md, bytes: 0}
+relevance: 5
+quality: 9
+quality_breakdown:
+  primary_source: true
+  author_credible: true
+  has_math: true
+  has_empirics: false
+  reproducible: false
+  recent: true
+  cited: false
+  substance_over_disclaimer: true
+bias: {protocol_sponsored: false, marketing: false, notes: 'Стратегический документ, построен на методологии + ДНК клиента + ДНК продукта, не на новых первичных данных.'}
+extracted:
+  notes: [n-6-urovnej-osoznannosti-dlya-hom-produkta, n-finansovyj-verdikt-glavnyj-konverter, n-4-polzunka-progretosti-produkt-slaboe-mesto]
+  claims: [c-0005, c-0006]
+  contradictions: []
+  outbound_links_tracked: 0
+status: processed
+reject_reason: null

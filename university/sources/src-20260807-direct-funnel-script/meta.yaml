@@ -1,0 +1,30 @@
+id: src-20260807-direct-funnel-script
+url: https://app.notion.com/p/3b5310064bc481e290b3d411741efc4e
+canonical_url: https://app.notion.com/p/3b5310064bc481e290b3d411741efc4e
+type: docs
+title: '💬 Direct Funnel — скрипт воронки в переписке (Вердикт → оплата)'
+authors: [{name: "Claude (в диалоге с Катей)", affiliation: "по методологии skill sales-assistant (София Добрынина + SPIN)"}]
+published: 2026-08-07
+fetched_at: 2026-08-28T00:00:00Z
+language: ru
+fetch_method: manual-paste
+storage: {original: original.md, bytes: 0}
+relevance: 5
+quality: 6
+quality_breakdown:
+  primary_source: true
+  author_credible: true
+  has_math: false
+  has_empirics: false
+  reproducible: false
+  recent: true
+  cited: false
+  substance_over_disclaimer: true
+bias: {protocol_sponsored: false, marketing: false, notes: 'Сконструированный артефакт (скрипт), не эмпирическое наблюдение — обоснован методологией sales-assistant и данными из seed-источников 1-3, но сам по себе не проверен в бою. Понижен по has_empirics/reproducible до появления реальных диалогов по этому скрипту.'}
+extracted:
+  notes: [n-ne-obyasnyat-produkt-do-osoznaniya-problemy, n-offer-tolko-posle-cennosti-na-sozvone]
+  claims: [c-0010]
+  contradictions: []
+  outbound_links_tracked: 0
+status: processed
+reject_reason: null

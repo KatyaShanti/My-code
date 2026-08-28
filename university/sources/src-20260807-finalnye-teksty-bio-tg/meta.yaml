@@ -1,0 +1,30 @@
+id: src-20260807-finalnye-teksty-bio-tg
+url: https://app.notion.com/p/3b5310064bc481eebff2f203eb632654
+canonical_url: https://app.notion.com/p/3b5310064bc481eebff2f203eb632654
+type: docs
+title: '🔗 Финальные тексты: био Instagram + закреп TG-канала'
+authors: [{name: "Claude (в диалоге с Катей)"}]
+published: 2026-08-07
+fetched_at: 2026-08-28T00:00:00Z
+language: ru
+fetch_method: manual-paste
+storage: {original: original.md, bytes: 0}
+relevance: 5
+quality: 5
+quality_breakdown:
+  primary_source: true
+  author_credible: true
+  has_math: false
+  has_empirics: false
+  reproducible: false
+  recent: true
+  cited: false
+  substance_over_disclaimer: true
+bias: {protocol_sponsored: false, marketing: true, notes: 'Продающие тексты, сконструированы в диалоге. Пересмотрены один раз в течение сессии после устной поправки Кати (TG -> Instagram Директ) — живой пример self-correction, см. contr-001/v-001.'}
+extracted:
+  notes: [n-instagram-direct-osnovnoj-kanal-ne-tg]
+  claims: [c-0012]
+  contradictions: [contr-001]
+  outbound_links_tracked: 0
+status: processed
+reject_reason: null

@@ -1,0 +1,39 @@
+id: src-20260725-dna-klienta-ot-haosa-k-poryadku
+url: https://app.notion.com/p/3a8310064bc48195b876f94a025c87d8
+canonical_url: https://app.notion.com/p/3a8310064bc48195b876f94a025c87d8
+type: docs
+title: 'ДНК клиента: от хаоса к порядку'
+authors: [{name: "Катя Шанти", affiliation: "фин.наставничество, метод Влада Ясько"}]
+published: 2026-07-25
+fetched_at: 2026-08-28T00:00:00Z
+language: ru
+fetch_method: manual-paste
+storage:
+  original: original.md
+  bytes: 0
+
+relevance: 5
+quality: 9
+quality_breakdown:
+  primary_source: true
+  author_credible: true
+  has_math: false
+  has_empirics: true
+  reproducible: false
+  recent: true
+  cited: false
+  substance_over_disclaimer: true
+
+bias:
+  protocol_sponsored: false
+  marketing: false
+  notes: 'Внутренний документ, составлен по DeepResearch (274 источника) + NotebookLM. Эмпирика качественная (реальные цитаты клиентов, боли), не количественная.'
+
+extracted:
+  notes: [n-uspeshnyj-no-bednyj-hides-zero-capital, n-duhovnyj-bajpas-kak-begstvo, n-verdikt-4-cifry-snizhaet-styd]
+  claims: [c-0001, c-0002]
+  contradictions: []
+  outbound_links_tracked: 0
+
+status: processed
+reject_reason: null
