@@ -10,4 +10,5 @@
 3. Settings → Environment Variables:
    - `TELEGRAM_BOT_TOKEN` — токен бота от @BotFather.
    - `TELEGRAM_CHAT_ID` — id чата, куда приходят заявки.
+   - `LEAD_WEBHOOK_URL` — (необязательно) адрес webhook ИИ-агента, туда уходит JSON с заявкой.
 4. Deploy.
