@@ -140,6 +140,7 @@ input[type=range]{width:100%;accent-color:var(--fg)}
 .ico{width:46px;height:46px;border-radius:14px;background:var(--surface);display:grid;place-items:center;flex:none}
 .ico svg{width:24px;height:24px;stroke:var(--fg)}
 .hl{font-size:22px!important;color:var(--accent)}
+.btn-y{background:#000;color:var(--course-title);border:2px solid var(--course-title);white-space:nowrap}
 .course h3{color:var(--course-title);font-size:22px}
 .offer .tag{align-self:flex-start;border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;font-size:13px;font-weight:600}
 .prog{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:4px;font-size:14px;font-weight:500}
@@ -428,7 +429,7 @@ input[type=range]{width:100%;accent-color:var(--fg)}
             <li>Итог и твой следующий шаг</li>
           </ol>
           <p class="note"><b id="courseTimer"></b></p>
-          <button class="btn" id="actBtn">🎟 Активировать бесплатное участие</button>
+          <button class="btn btn-y" id="actBtn">Активировать участие за 0 ₽</button>
           <form id="actForm" hidden style="display:flex;flex-direction:column;gap:10px">
             <label class="f">Как тебя зовут?<input class="in sm" id="actName" required autocomplete="given-name" placeholder="Имя"></label>
             <label class="f">Твой Telegram<input class="in sm" id="actTg" required autocomplete="off" placeholder="@username"></label>
