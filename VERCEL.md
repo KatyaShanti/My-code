@@ -6,7 +6,7 @@
 
 ## Настройка в Vercel
 1. Add New → Project → импортировать этот репозиторий.
-2. Root Directory: `finansy-na-kukhne`. Framework Preset: Other.
+2. Root Directory: `./` (корень). Framework Preset: Other.
 3. Settings → Environment Variables:
    - `TELEGRAM_BOT_TOKEN` — токен бота от @BotFather.
    - `TELEGRAM_CHAT_ID` — id чата, куда приходят заявки.
