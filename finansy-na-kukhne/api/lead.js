@@ -18,7 +18,9 @@ module.exports = async (req, res) => {
   }
   const name = clean(body?.name);
   const tg = clean(body?.tg);
-  if (!name || !tg) return res.status(400).json({ ok: false, error: 'missing_fields' });
+  if (!name || !/^@[A-Za-z][A-Za-z0-9_]{4,31}$/.test(tg)) {
+    return res.status(400).json({ ok: false, error: 'invalid_fields' });
+  }
 
   const text = [
     '🎟 Новая активация мини-курса «Финансы на кухне»',

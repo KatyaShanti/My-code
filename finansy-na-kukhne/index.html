@@ -432,7 +432,8 @@ input[type=range]{width:100%;accent-color:var(--fg)}
           <button class="btn btn-y" id="actBtn">Активировать участие за 0 ₽</button>
           <form id="actForm" hidden style="display:flex;flex-direction:column;gap:10px">
             <label class="f">Как тебя зовут?<input class="in sm" id="actName" required autocomplete="given-name" placeholder="Имя"></label>
-            <label class="f">Твой Telegram<input class="in sm" id="actTg" required autocomplete="off" placeholder="@username"></label>
+            <label class="f">Твой Telegram<input class="in sm" id="actTg" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="@username"></label>
+            <p class="note small red" id="actErr" hidden>Напиши ник в Telegram с собачкой, латинскими буквами, например @katya_fin</p>
             <button class="btn" type="submit">Активировать</button>
           </form>
           <div id="actDone" hidden style="display:flex;flex-direction:column;gap:10px">
@@ -598,8 +599,9 @@ function invest(){
 }
 $('actBtn').addEventListener('click',()=>{$('actForm').hidden=false;$('actBtn').hidden=true;$('actName').focus();});
 $('actForm').addEventListener('submit',e=>{e.preventDefault();
-  const name=$('actName').value.trim(),tg=$('actTg').value.trim();if(!name||!tg)return;
-  S.course={on:true,name,tg:tg.startsWith('@')||tg.includes('/')?tg:'@'+tg,at:Date.now()};save();
+  const name=$('actName').value.trim(),tg=$('actTg').value.trim();
+  const okTg=/^@[A-Za-z][A-Za-z0-9_]{4,31}$/.test(tg);$('actErr').hidden=okTg;if(!name||!okTg){if(!okTg)$('actTg').focus();return;}
+  S.course={on:true,name,tg,at:Date.now()};save();
   $('actForm').hidden=true;
   try{fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:S.course.name,tg:S.course.tg,source:'navigator'})}).catch(()=>{});}catch(_){}
   update();});
