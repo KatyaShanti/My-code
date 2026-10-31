@@ -2,243 +2,250 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Unbounded:wght@500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
 <style>
-/* Layout: one reading column; the 45/15/20/10/10 envelope strip is the signature element, repeated in the calculator */
+/* Layout: app-like wizard, one step per screen, sticky "Далее" bar; envelopes are pastel cards with a paper flap */
 :root {
-  --bg: #F2F4F1;
+  --bg: #F4F2F8;
   --surface: #FFFFFF;
-  --fg: #16231D;
-  --muted: #5A6A62;
-  --line: #D9E0DA;
-  --accent: #1E6A4E;
-  --accent-ink: #FFFFFF;
-  --code-bg: #E9EEE9;
-  --warn: #B4442F;
-  --ok: #2A7A55;
-  --e-cur: #3D6F8E;
-  --e-joy: #D88A2E;
-  --e-debt: #A84A44;
-  --e-learn: #6E5FA8;
-  --e-save: #2F8A68;
-  --e-l2: #1E6A4E;
-  --f-display: "Unbounded", "Arial Black", system-ui, sans-serif;
-  --f-body: "Golos Text", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --f-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --fg: #241E36;
+  --muted: #6D6680;
+  --line: #E4E0EE;
+  --ink: #3B2C74;
+  --ink-fg: #FFFFFF;
+  --ok: #23805A;
+  --warn: #C2453A;
+  --e-cur: #DCE7F8;   --e-cur-t: #2D5590;
+  --e-joy: #FCE4D3;   --e-joy-t: #A0531B;
+  --e-debt: #F8DAE0;  --e-debt-t: #A53A52;
+  --e-learn: #E7DFF9; --e-learn-t: #5B43A8;
+  --e-save: #D7F0E3;  --e-save-t: #23805A;
+  --flap: rgba(36, 30, 54, 0.06);
+  --shadow: 0 1px 2px rgba(36,30,54,.05), 0 8px 24px rgba(36,30,54,.06);
+  --f: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #111814; --surface: #18211C; --fg: #E6ECE7; --muted: #95A59C; --line: #2A3630;
-    --accent: #5CC495; --accent-ink: #0E1612; --code-bg: #1D2822; --warn: #F08A74; --ok: #6FD3A2;
-    --e-cur: #6FA3C4; --e-joy: #E9A855; --e-debt: #D8746C; --e-learn: #A194DB; --e-save: #5CC495; --e-l2: #5CC495;
+    --bg: #15121E; --surface: #1F1A2B; --fg: #EEEAF6; --muted: #A39CB5; --line: #2F293D;
+    --ink: #B9A8FF; --ink-fg: #17121F; --ok: #6ED3A3; --warn: #FF8D80;
+    --e-cur: #1F2B40; --e-cur-t: #9BBDF0; --e-joy: #3A2A1E; --e-joy-t: #F4B98A;
+    --e-debt: #3A2229; --e-debt-t: #F3A3B3; --e-learn: #2B2342; --e-learn-t: #C7B6FF;
+    --e-save: #1C3329; --e-save-t: #7EDCAF; --flap: rgba(255,255,255,0.05);
+    --shadow: 0 1px 2px rgba(0,0,0,.3);
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #111814; --surface: #18211C; --fg: #E6ECE7; --muted: #95A59C; --line: #2A3630;
-  --accent: #5CC495; --accent-ink: #0E1612; --code-bg: #1D2822; --warn: #F08A74; --ok: #6FD3A2;
-  --e-cur: #6FA3C4; --e-joy: #E9A855; --e-debt: #D8746C; --e-learn: #A194DB; --e-save: #5CC495; --e-l2: #5CC495;
+  --bg: #15121E; --surface: #1F1A2B; --fg: #EEEAF6; --muted: #A39CB5; --line: #2F293D;
+  --ink: #B9A8FF; --ink-fg: #17121F; --ok: #6ED3A3; --warn: #FF8D80;
+  --e-cur: #1F2B40; --e-cur-t: #9BBDF0; --e-joy: #3A2A1E; --e-joy-t: #F4B98A;
+  --e-debt: #3A2229; --e-debt-t: #F3A3B3; --e-learn: #2B2342; --e-learn-t: #C7B6FF;
+  --e-save: #1C3329; --e-save-t: #7EDCAF; --flap: rgba(255,255,255,0.05);
+  --shadow: 0 1px 2px rgba(0,0,0,.3);
   color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 body {
   background: var(--bg); color: var(--fg);
-  font-family: var(--f-body); font-size: 17px; line-height: 1.6;
+  font-family: var(--f); font-size: 17px; line-height: 1.55;
   padding-left: max(16px, env(safe-area-inset-left, 0px));
   padding-right: max(16px, env(safe-area-inset-right, 0px));
-  padding-block: 0 64px;
+  padding-block: 0;
 }
-.wrap { max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; gap: 72px; }
-h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; line-height: 1.15; margin: 0; }
-h1 { font-size: clamp(32px, 7vw, 56px); font-weight: 700; letter-spacing: -0.01em; }
-h2 { font-size: clamp(22px, 4vw, 30px); font-weight: 700; }
-h3 { font-size: 17px; font-weight: 500; }
-p { margin: 0; max-width: 65ch; }
-.eyebrow { font-family: var(--f-mono); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
-.lede { font-size: 19px; color: var(--muted); }
-section { display: flex; flex-direction: column; gap: 20px; }
-.sec-head { display: flex; flex-direction: column; gap: 8px; }
-.num { font-variant-numeric: tabular-nums; font-family: var(--f-mono); }
+.app { max-width: 560px; margin: 0 auto; min-height: 100%; display: flex; flex-direction: column; }
+h1, h2, h3 { margin: 0; text-wrap: balance; line-height: 1.2; }
+h1 { font-size: clamp(30px, 8vw, 40px); font-weight: 800; letter-spacing: -0.02em; }
+h2 { font-size: clamp(24px, 6.5vw, 30px); font-weight: 800; letter-spacing: -0.015em; }
+h3 { font-size: 18px; font-weight: 700; }
+p { margin: 0; }
+.muted { color: var(--muted); }
+.num { font-variant-numeric: tabular-nums; }
+button { font-family: var(--f); }
 
-/* Hero */
-header { padding-top: 56px; display: flex; flex-direction: column; gap: 24px; }
-.strip { display: flex; height: 64px; border-radius: 6px; overflow: hidden; }
-.strip > div { display: flex; align-items: flex-end; padding: 8px 10px; color: #fff; font-family: var(--f-mono); font-size: 14px; font-weight: 500; min-width: 0; }
-.legend { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
-.legend div { display: flex; flex-direction: column; gap: 2px; font-size: 14px; line-height: 1.35; min-width: 0; }
-.legend b { font-weight: 600; font-size: 15px; }
-.legend span { color: var(--muted); }
-.legend i { display: block; width: 18px; height: 4px; border-radius: 2px; margin-bottom: 6px; }
-@media (max-width: 640px) {
-  .legend { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .strip > div { font-size: 12px; padding: 6px; }
-}
-.c-cur { background: var(--e-cur); } .c-joy { background: var(--e-joy); } .c-debt { background: var(--e-debt); }
-.c-learn { background: var(--e-learn); } .c-save { background: var(--e-save); } .c-l2 { background: var(--e-l2); }
+/* Progress */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); padding-block: 16px 12px; display: flex; flex-direction: column; gap: 10px; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.top-row { display: flex; justify-content: space-between; align-items: center; font-size: 14px; font-weight: 600; }
+.brand { color: var(--ink); }
+.dots { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+.dots span { height: 5px; border-radius: 3px; background: var(--line); }
+.dots span.on { background: var(--ink); }
+
+/* Screens */
+main { flex: 1; padding-block: 12px 120px; }
+.screen { display: flex; flex-direction: column; gap: 22px; }
+.step-label { font-size: 14px; font-weight: 700; color: var(--ink); letter-spacing: 0.02em; }
+.intro { display: flex; flex-direction: column; gap: 10px; }
+.intro p { font-size: 18px; color: var(--muted); }
+
+.card { background: var(--surface); border-radius: 20px; padding: 20px; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 14px; }
+
+/* Welcome list */
+.get { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.get li { display: grid; grid-template-columns: 40px minmax(0,1fr); gap: 12px; align-items: center; }
+.get .ic { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; font-weight: 800; font-size: 15px; }
+.get b { display: block; font-weight: 700; }
+.get span { color: var(--muted); font-size: 15px; }
+
+/* Envelopes */
+.envs { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; }
+.env { position: relative; border-radius: 16px; padding: 30px 14px 14px; overflow: hidden; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.env::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 22px; background: var(--flap); clip-path: polygon(0 0, 100% 0, 50% 100%); }
+.env .pc { position: absolute; top: 8px; right: 12px; font-size: 13px; font-weight: 800; opacity: .8; }
+.env .nm { font-weight: 700; font-size: 15px; }
+.env .am { font-weight: 800; font-size: 22px; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+.env .st { font-size: 13px; font-weight: 600; }
+.env.wide { grid-column: 1 / -1; }
+.e-cur { background: var(--e-cur); color: var(--e-cur-t); }
+.e-joy { background: var(--e-joy); color: var(--e-joy-t); }
+.e-debt { background: var(--e-debt); color: var(--e-debt-t); }
+.e-learn { background: var(--e-learn); color: var(--e-learn-t); }
+.e-save { background: var(--e-save); color: var(--e-save-t); }
 
 /* Levels */
-.levels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-@media (max-width: 640px) { .levels { grid-template-columns: 1fr; } }
-.level { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 22px; display: flex; flex-direction: column; gap: 10px; }
-.level .tag { font-family: var(--f-mono); font-size: 13px; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
-.level ul { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 4px; }
-.formula { font-family: var(--f-mono); font-size: 15px; background: var(--code-bg); border-radius: 8px; padding: 14px 16px; line-height: 1.5; overflow-x: auto; }
+.lv { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.lv .card { gap: 6px; }
+.lv .tag { font-size: 13px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
 
-/* Calculator */
-.calc { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 24px; display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: 32px; }
-@media (max-width: 720px) { .calc { grid-template-columns: 1fr; padding: 18px; } }
-.inputs { display: flex; flex-direction: column; gap: 14px; }
-.field { display: flex; flex-direction: column; gap: 4px; }
-.field label { font-size: 14px; color: var(--muted); }
-.field input { font: 500 17px var(--f-mono); color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; width: 100%; font-variant-numeric: tabular-nums; }
-.field input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
-.example-note { font-size: 13px; color: var(--muted); }
-.results { display: flex; flex-direction: column; gap: 22px; min-width: 0; }
-.kpis { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-.kpi { display: flex; flex-direction: column; gap: 2px; }
-.kpi .k { font-size: 13px; color: var(--muted); }
-.kpi .v { font: 500 24px var(--f-mono); font-variant-numeric: tabular-nums; }
-table { width: 100%; border-collapse: collapse; font-size: 15px; }
-th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--line); }
-th { font-weight: 500; color: var(--muted); font-size: 13px; }
-td.r, th.r { text-align: right; font-family: var(--f-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
-td .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 8px; vertical-align: 1px; }
-.bad { color: var(--warn); } .good { color: var(--ok); }
-.verdict { display: flex; flex-direction: column; gap: 8px; padding: 14px 16px; border-radius: 8px; background: var(--code-bg); font-size: 15px; }
-.verdict p { max-width: none; }
-.pill { display: inline-block; font: 500 12px var(--f-mono); letter-spacing: 0.04em; text-transform: uppercase; padding: 3px 8px; border-radius: 99px; border: 1px solid currentColor; }
+/* Form */
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-weight: 600; font-size: 15px; }
+.field small { color: var(--muted); font-size: 13px; }
+.money { position: relative; }
+.money input { width: 100%; font: 700 22px var(--f); color: var(--fg); background: var(--bg); border: 2px solid transparent; border-radius: 14px; padding: 14px 44px 14px 16px; font-variant-numeric: tabular-nums; }
+.money input:focus { outline: none; border-color: var(--ink); }
+.money em { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); font-style: normal; font-weight: 700; color: var(--muted); }
 
-/* Steps & blocks */
-.steps { margin: 0; padding: 0; list-style: none; counter-reset: s; display: flex; flex-direction: column; gap: 10px; }
-.steps li { counter-increment: s; display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 12px; align-items: baseline; }
-.steps li::before { content: counter(s); font: 500 15px var(--f-mono); color: var(--accent); }
-.block { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
-.block-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; flex-wrap: wrap; }
-.block-head .t { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1 1 260px; }
-.block-head .t span { color: var(--muted); font-size: 14px; line-height: 1.4; }
-.copy { font: 500 14px var(--f-body); background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 8px; padding: 9px 14px; cursor: pointer; white-space: nowrap; }
-.copy:hover { filter: brightness(1.08); }
-.copy:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
-.copy.done { background: var(--fg); color: var(--bg); }
-pre { margin: 0; font-family: var(--f-mono); font-size: 14px; line-height: 1.6; white-space: pre-wrap; word-break: break-word; background: var(--code-bg); padding: 16px; border-top: 1px solid var(--line); }
-details > summary { cursor: pointer; padding: 10px 16px; font-size: 14px; color: var(--accent); border-top: 1px solid var(--line); list-style: none; }
-details > summary::-webkit-details-marker { display: none; }
-details > summary::before { content: "▸ "; }
-details[open] > summary::before { content: "▾ "; }
-details > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
-.prompts { display: flex; flex-direction: column; gap: 14px; }
-.pnum { font: 500 13px var(--f-mono); color: var(--muted); }
+.answer { border-radius: 20px; padding: 20px; display: flex; flex-direction: column; gap: 8px; background: var(--surface); box-shadow: var(--shadow); }
+.answer .big { font-size: 34px; font-weight: 800; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.answer .lead { font-weight: 700; }
+.badge { align-self: flex-start; font-size: 13px; font-weight: 800; padding: 5px 12px; border-radius: 99px; }
+.badge.ok { background: var(--e-save); color: var(--e-save-t); }
+.badge.bad { background: var(--e-debt); color: var(--e-debt-t); }
+.facts { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px; font-size: 16px; }
+.facts li { display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid var(--line); padding-top: 8px; }
+.facts li b { white-space: nowrap; font-variant-numeric: tabular-nums; }
 
-footer { border-top: 1px solid var(--line); padding-top: 28px; display: flex; flex-direction: column; gap: 14px; }
-footer .cta { font-family: var(--f-display); font-size: clamp(20px, 3.5vw, 26px); font-weight: 500; line-height: 1.3; }
-footer .small { font-size: 13px; color: var(--muted); }
-@media (prefers-reduced-motion: no-preference) { .strip > div, .bar > div { transition: flex-basis .35s ease; } }
-.bar { display: flex; height: 14px; border-radius: 4px; overflow: hidden; background: var(--line); }
+/* Copy cards */
+.copy-card { background: var(--surface); border-radius: 20px; box-shadow: var(--shadow); padding: 18px; display: flex; flex-direction: column; gap: 12px; }
+.copy-card .head { display: grid; grid-template-columns: 44px minmax(0,1fr); gap: 12px; align-items: center; }
+.copy-card .n { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; font-weight: 800; font-size: 18px; }
+.copy-card .head div > span { display: block; color: var(--muted); font-size: 14px; line-height: 1.4; }
+.copy-card.done .n { background: var(--e-save) !important; color: var(--e-save-t) !important; }
+.btn { appearance: none; border: 0; border-radius: 14px; padding: 15px 18px; font-size: 16px; font-weight: 700; cursor: pointer; width: 100%; }
+.btn-main { background: var(--ink); color: var(--ink-fg); }
+.btn-soft { background: var(--bg); color: var(--fg); }
+.btn:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+.btn.copied { background: var(--ok); color: #fff; }
+.peek { border: 0; background: none; color: var(--ink); font: 600 15px var(--f); padding: 2px 0; cursor: pointer; align-self: flex-start; }
+.peek:focus-visible { outline: 2px solid var(--ink); border-radius: 4px; }
+.paper { white-space: pre-wrap; word-break: break-word; font-size: 15px; line-height: 1.6; background: var(--bg); border-radius: 14px; padding: 16px; max-height: 360px; overflow-y: auto; }
+
+/* How-to */
+.how { list-style: none; margin: 0; padding: 0; counter-reset: h; display: flex; flex-direction: column; gap: 12px; }
+.how li { counter-increment: h; display: grid; grid-template-columns: 30px minmax(0,1fr); gap: 10px; }
+.how li::before { content: counter(h); width: 30px; height: 30px; border-radius: 50%; background: var(--bg); display: grid; place-items: center; font-weight: 800; font-size: 14px; color: var(--ink); }
+.seg { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; background: var(--bg); border-radius: 14px; padding: 4px; }
+.seg button { border: 0; background: none; border-radius: 10px; padding: 10px; font-weight: 700; font-size: 15px; color: var(--muted); cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--surface); color: var(--fg); box-shadow: var(--shadow); }
+.seg button:focus-visible { outline: 2px solid var(--ink); }
+.tip { border-radius: 16px; padding: 14px 16px; background: var(--e-learn); color: var(--e-learn-t); font-size: 15px; font-weight: 600; }
+
+.cta { border-radius: 20px; padding: 22px; background: var(--ink); color: var(--ink-fg); display: flex; flex-direction: column; gap: 8px; }
+.cta b { font-size: 20px; font-weight: 800; line-height: 1.3; }
+.fine { font-size: 13px; color: var(--muted); text-align: center; }
+
+/* Bottom nav */
+.nav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 6; background: linear-gradient(to top, var(--bg) 70%, transparent); padding-top: 24px; padding-bottom: max(16px, env(safe-area-inset-bottom, 0px)); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.nav-in { max-width: 560px; margin: 0 auto; display: grid; grid-template-columns: auto 1fr; gap: 10px; }
+.nav .back { width: auto; padding-inline: 20px; }
+.nav .back[hidden] + .next { grid-column: 1 / -1; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .screen { animation: in .25s ease both; }
+  @keyframes in { from { transform: translateY(6px); } to { transform: none; } }
+}
 </style>
 
-<div class="wrap">
+<div class="app">
+  <div class="top">
+    <div class="top-row"><span class="brand">@fin.prim</span><span class="muted" id="step-count">Шаблон</span></div>
+    <div class="dots" id="dots"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+  </div>
 
-<header>
-  <div class="eyebrow">Шаблон от @fin.prim</div>
-  <h1>Система конвертов</h1>
-  <p class="lede">Финансовый ассистент на нейросети: инструкция для бота, анкета, 6 промптов и ежемесячный обзор. Заполняете анкету один раз, дальше бот считает за вас.</p>
-  <div class="strip" aria-label="Распределение базового дохода по конвертам">
-    <div class="c-cur" style="flex-basis:45%">45%</div>
-    <div class="c-joy" style="flex-basis:15%">15%</div>
-    <div class="c-debt" style="flex-basis:20%">20%</div>
-    <div class="c-learn" style="flex-basis:10%">10%</div>
-    <div class="c-save" style="flex-basis:10%">10%</div>
-  </div>
-  <div class="legend">
-    <div><i class="c-cur"></i><b>Текущие</b><span>аренда, еда, связь, транспорт</span></div>
-    <div><i class="c-joy"></i><b>Радость</b><span>то, что даёт энергию</span></div>
-    <div><i class="c-debt"></i><b>Долги</b><span>кредиты, рассрочки; остаток в подушку</span></div>
-    <div><i class="c-learn"></i><b>Обучение</b><span>курсы, книги, навыки</span></div>
-    <div><i class="c-save"></i><b>Сбережения</b><span>капитал; подушку отсюда не берём</span></div>
-  </div>
-</header>
+  <main>
 
-<section>
-  <div class="sec-head">
-    <div class="eyebrow">Логика системы</div>
-    <h2>Два уровня дохода</h2>
-  </div>
-  <div class="levels">
-    <div class="level">
-      <div class="tag">Уровень 1</div>
-      <h3>База</h3>
-      <p>Доход, которого хватает, чтобы 45% закрывали все текущие расходы, а 20% — все платежи по долгам. Делится на 5 конвертов, проценты не меняются.</p>
-    </div>
-    <div class="level">
-      <div class="tag">Уровень 2</div>
-      <h3>Цели</h3>
-      <p>Всё, что вы зарабатываете сверху базы. Отсюда копятся:</p>
-      <ul><li>подушка безопасности, в первую очередь</li><li>цели и мечты</li></ul>
-    </div>
-  </div>
-  <div class="formula">Базовый доход = максимум из<br>(Текущие ÷ 0,45) и (Платежи по долгам ÷ 0,20)</div>
-</section>
-
-<section>
-  <div class="sec-head">
-    <div class="eyebrow">Быстрая проверка</div>
-    <h2>Посчитайте свою базу</h2>
-    <p>Введите свои цифры. Сейчас стоят примерные значения.</p>
-  </div>
-  <div class="calc">
-    <form class="inputs" id="calc-form" autocomplete="off">
-      <div class="field"><label for="inc">Доход после налогов, в месяц</label><input id="inc" inputmode="numeric" value="120 000"></div>
-      <div class="field"><label for="cur">Текущие расходы, в месяц</label><input id="cur" inputmode="numeric" value="54 000"></div>
-      <div class="field"><label for="debt">Мин. платежи по долгам, в месяц</label><input id="debt" inputmode="numeric" value="15 000"></div>
-      <div class="field"><label for="months">Подушка на сколько месяцев</label><input id="months" inputmode="numeric" value="6"></div>
-      <div class="field"><label for="saved">Уже накоплено в подушке</label><input id="saved" inputmode="numeric" value="0"></div>
-      <div class="field"><label for="cur-sym">Валюта</label><input id="cur-sym" value="₽"></div>
-      <p class="example-note">Расчёт идёт только в вашем браузере, цифры никуда не отправляются.</p>
-    </form>
-    <div class="results" aria-live="polite">
-      <div class="kpis">
-        <div class="kpi"><span class="k">Базовый доход</span><span class="v" id="o-base">—</span></div>
-        <div class="kpi"><span class="k">Уровень 2 (сверху базы)</span><span class="v" id="o-l2">—</span></div>
+    <!-- 0. Welcome -->
+    <section class="screen" data-step="0">
+      <div class="intro">
+        <h1>Ваш финансовый ассистент</h1>
+        <p>За 15 минут настроите нейросеть, которая будет раскладывать деньги по конвертам, искать утечки и каждый месяц разбирать с вами бюджет.</p>
       </div>
-      <div class="bar" id="o-bar" aria-hidden="true"></div>
-      <div style="overflow-x:auto">
-        <table>
-          <thead><tr><th>Конверт</th><th class="r">Сумма</th><th class="r">Нужно</th><th class="r">Итог</th></tr></thead>
-          <tbody id="o-table"></tbody>
-        </table>
+      <div class="card">
+        <h3>Что вы получите</h3>
+        <ul class="get">
+          <li><span class="ic e-save">₽</span><div><b>Свою базу</b><span>сколько нужно зарабатывать, чтобы всего хватало</span></div></li>
+          <li><span class="ic e-learn">AI</span><div><b>Личного бота</b><span>в ChatGPT или Claude, по системе конвертов</span></div></li>
+          <li><span class="ic e-joy">6</span><div><b>6 готовых промптов</b><span>подушка, утечки, радость, цель на год</span></div></li>
+          <li><span class="ic e-cur">↻</span><div><b>Обзор месяца</b><span>шаблон, чтобы видеть прогресс</span></div></li>
+        </ul>
       </div>
-      <div class="verdict" id="o-verdict"></div>
-    </div>
-  </div>
-</section>
+      <div class="envs" aria-label="Пять конвертов">
+        <div class="env e-cur wide"><span class="pc">45%</span><span class="nm">Текущие</span><span class="st">аренда, еда, связь, транспорт</span></div>
+        <div class="env e-joy"><span class="pc">15%</span><span class="nm">Радость</span><span class="st">то, что даёт энергию</span></div>
+        <div class="env e-debt"><span class="pc">20%</span><span class="nm">Долги</span><span class="st">кредиты, рассрочки</span></div>
+        <div class="env e-learn"><span class="pc">10%</span><span class="nm">Обучение</span><span class="st">курсы, книги</span></div>
+        <div class="env e-save"><span class="pc">10%</span><span class="nm">Сбережения</span><span class="st">ваш капитал</span></div>
+      </div>
+    </section>
 
-<section>
-  <div class="sec-head">
-    <div class="eyebrow">Как пользоваться</div>
-    <h2>Настройка за 15 минут</h2>
-  </div>
-  <ol class="steps">
-    <li><p>Создайте проект в ChatGPT (Проект или Custom GPT) или в Claude (Project).</p></li>
-    <li><p>Скопируйте <b>инструкцию для бота</b> и вставьте в инструкции проекта.</p></li>
-    <li><p>Заполните <b>анкету</b> один раз и отправьте её боту первым сообщением или загрузите файлом в проект.</p></li>
-    <li><p>Запускайте <b>6 промптов</b> по порядку. Данные бот возьмёт из анкеты.</p></li>
-    <li><p>Раз в месяц заполняйте <b>обзор месяца</b> и отправляйте боту.</p></li>
-  </ol>
-</section>
+    <!-- 1. Base -->
+    <section class="screen" data-step="1" hidden>
+      <div class="intro">
+        <div class="step-label">Шаг 1 · Ваша база</div>
+        <h2>Сколько вам нужно зарабатывать</h2>
+        <p>База — это доход, при котором 45% закрывают текущие расходы, а 20% — долги. Всё, что сверху, идёт на подушку и мечты.</p>
+      </div>
+      <form class="card" id="calc" autocomplete="off">
+        <div class="field"><label for="inc">Доход после налогов в месяц</label><div class="money"><input id="inc" inputmode="numeric" value="120 000"><em>₽</em></div></div>
+        <div class="field"><label for="cur">Обязательные расходы в месяц</label><small>аренда, коммуналка, еда, связь, транспорт</small><div class="money"><input id="cur" inputmode="numeric" value="54 000"><em>₽</em></div></div>
+        <div class="field"><label for="debt">Платежи по долгам в месяц</label><small>если долгов нет, поставьте 0</small><div class="money"><input id="debt" inputmode="numeric" value="15 000"><em>₽</em></div></div>
+      </form>
+      <div class="answer" id="answer" aria-live="polite"></div>
+      <div class="envs" id="envs"></div>
+      <p class="fine">Это пример. Введите свои цифры, расчёт останется только на вашем телефоне.</p>
+    </section>
 
-<section>
-  <div class="sec-head">
-    <div class="eyebrow">Шаг 1</div>
-    <h2>Инструкция для бота</h2>
-  </div>
-  <div class="block">
-    <div class="block-head">
-      <div class="t"><h3>Системная инструкция</h3><span>Вставляется один раз в настройки проекта</span></div>
-      <button class="copy" type="button" data-copy="t-system">Скопировать</button>
-    </div>
-    <details><summary>Показать текст</summary>
-<pre id="t-system">Ты — личный финансовый ассистент по системе конвертов @fin.prim.
+    <!-- 2. Bot -->
+    <section class="screen" data-step="2" hidden>
+      <div class="intro">
+        <div class="step-label">Шаг 2 · Бот</div>
+        <h2>Создайте своего бота</h2>
+        <p>Один раз вставьте инструкцию, и нейросеть будет считать строго по системе конвертов.</p>
+      </div>
+      <div class="card">
+        <div class="seg" role="group" aria-label="Где создаёте бота">
+          <button type="button" aria-pressed="true" data-ai="gpt">ChatGPT</button>
+          <button type="button" aria-pressed="false" data-ai="claude">Claude</button>
+        </div>
+        <ol class="how" id="how-gpt">
+          <li><p>Откройте ChatGPT и в меню слева нажмите <b>«Новый проект»</b>. Назовите его «Мои финансы».</p></li>
+          <li><p>В проекте откройте <b>«Инструкции»</b>.</p></li>
+          <li><p>Вставьте текст, который скопируете ниже, и сохраните.</p></li>
+        </ol>
+        <ol class="how" id="how-claude" hidden>
+          <li><p>Откройте Claude, слева выберите <b>«Проекты»</b> и создайте новый. Назовите его «Мои финансы».</p></li>
+          <li><p>Справа нажмите <b>«Инструкции проекта»</b>.</p></li>
+          <li><p>Вставьте текст, который скопируете ниже, и сохраните.</p></li>
+        </ol>
+      </div>
+      <div class="copy-card" data-id="system">
+        <div class="head"><span class="n e-learn">AI</span><div><h3>Инструкция для бота</h3><span>Правила конвертов, двух уровней дохода и подушки</span></div></div>
+        <button class="btn btn-main" type="button" data-copy="t-system">Скопировать инструкцию</button>
+        <button class="peek" type="button" data-peek="t-system">Посмотреть текст</button>
+        <div class="paper" id="t-system" hidden>Ты — личный финансовый ассистент по системе конвертов @fin.prim.
 Все данные клиента — в его Анкете. Сначала бери данные оттуда. Если чего-то не хватает — спроси, не придумывай.
 
 == ДВА УРОВНЯ ДОХОДА ==
@@ -286,24 +293,27 @@ footer .small { font-size: 13px; color: var(--muted); }
 Чтобы собрать за 12 мес: 34 500/мес. Есть 9 000 → нужно +25 500/мес на Уровне 2.
 
 Если бы доход был 100 000: Текущие 45% = 45 000 при нужных 54 000 → дефицит 9 000.
-До базы не хватает 20 000 дохода.</pre>
-    </details>
-  </div>
-</section>
+До базы не хватает 20 000 дохода.</div>
+      </div>
+    </section>
 
-<section>
-  <div class="sec-head">
-    <div class="eyebrow">Шаг 2</div>
-    <h2>Анкета</h2>
-    <p>Заполняется один раз. Чем точнее цифры, тем точнее расчёты.</p>
-  </div>
-  <div class="block">
-    <div class="block-head">
-      <div class="t"><h3>Анкета @fin.prim</h3><span>Доход, расходы, долги, цели, что вас заряжает, навыки</span></div>
-      <button class="copy" type="button" data-copy="t-form">Скопировать</button>
-    </div>
-    <details><summary>Показать текст</summary>
-<pre id="t-form">АНКЕТА @fin.prim
+    <!-- 3. Form -->
+    <section class="screen" data-step="3" hidden>
+      <div class="intro">
+        <div class="step-label">Шаг 3 · Анкета</div>
+        <h2>Расскажите боту о себе</h2>
+        <p>Заполняется один раз. Потом все промпты берут данные отсюда, и не нужно ничего вводить заново.</p>
+      </div>
+      <ol class="how card">
+        <li><p>Скопируйте анкету.</p></li>
+        <li><p>Вставьте в заметки на телефоне и заполните.</p></li>
+        <li><p>Отправьте боту первым сообщением в проекте «Мои финансы».</p></li>
+      </ol>
+      <div class="copy-card" data-id="form">
+        <div class="head"><span class="n e-joy">✎</span><div><h3>Анкета @fin.prim</h3><span>Доход, расходы, долги, цель, что вас заряжает, навыки</span></div></div>
+        <button class="btn btn-main" type="button" data-copy="t-form">Скопировать анкету</button>
+        <button class="peek" type="button" data-peek="t-form">Посмотреть текст</button>
+        <div class="paper" id="t-form" hidden>АНКЕТА @fin.prim
 
 — ОБЩЕЕ —
 Имя:
@@ -355,25 +365,24 @@ footer .small { font-size: 13px; color: var(--muted); }
 Профессия / чем занимаюсь:
 Сильные навыки:
 Сколько часов в неделю готов(а) тратить на доп. доход:
-Чего точно не хочу делать:</pre>
-    </details>
-  </div>
-</section>
-
-<section>
-  <div class="sec-head">
-    <div class="eyebrow">Шаг 3</div>
-    <h2>Шесть промптов</h2>
-    <p>Отправляйте боту по порядку. Каждый следующий опирается на расчёты предыдущего.</p>
-  </div>
-  <div class="prompts">
-
-    <div class="block">
-      <div class="block-head">
-        <div class="t"><span class="pnum">Промпт 1</span><h3>Разложи зарплату по конвертам</h3><span>База, дефициты, остаток долгов в подушку</span></div>
-        <button class="copy" type="button" data-copy="p1">Скопировать</button>
+Чего точно не хочу делать:</div>
       </div>
-<pre id="p1">Возьми данные из моей анкеты.
+      <div class="tip">Чем честнее цифры, тем точнее советы. Бот не осуждает, он считает.</div>
+    </section>
+
+    <!-- 4. Prompts -->
+    <section class="screen" data-step="4" hidden>
+      <div class="intro">
+        <div class="step-label">Шаг 4 · Промпты</div>
+        <h2>Шесть промптов по порядку</h2>
+        <p>Копируйте по одному и отправляйте боту. Скопированные отмечаются галочкой.</p>
+      </div>
+
+      <div class="copy-card" data-id="p1">
+        <div class="head"><span class="n e-cur">1</span><div><h3>Разложи зарплату по конвертам</h3><span>Узнаете, хватает ли денег в каждом конверте</span></div></div>
+        <button class="btn btn-soft" type="button" data-copy="p1">Скопировать</button>
+        <button class="peek" type="button" data-peek="p1">Посмотреть текст</button>
+        <div class="paper" id="p1" hidden>Возьми данные из моей анкеты.
 Посчитай мой Базовый доход и разложи доход по конвертам: Текущие 45%, Радость 15%, Долги 20%, Обучение 10%, Сбережения 10%. Проценты не меняй.
 
 Проверь:
@@ -383,15 +392,14 @@ footer .small { font-size: 13px; color: var(--muted); }
 — если не хватает — покажи дефицит и скажи, на сколько мне нужно увеличить доход до базового уровня.
 — есть ли у меня Уровень 2 (доход сверху базы) и какой?
 
-Отдельно скажи, где по моим цифрам я вероятнее всего перерасходую (точный ответ дадим в промпте «Утечки»).</pre>
-    </div>
-
-    <div class="block">
-      <div class="block-head">
-        <div class="t"><span class="pnum">Промпт 2</span><h3>Первый перевод в подушку</h3><span>План на 12 месяцев в двух вариантах</span></div>
-        <button class="copy" type="button" data-copy="p2">Скопировать</button>
+Отдельно скажи, где по моим цифрам я вероятнее всего перерасходую (точный ответ дадим в промпте «Утечки»).</div>
       </div>
-<pre id="p2">Возьми данные из анкеты и расчёт конвертов.
+
+      <div class="copy-card" data-id="p2">
+        <div class="head"><span class="n e-save">2</span><div><h3>Первый перевод в подушку</h3><span>План накопления на 12 месяцев в двух вариантах</span></div></div>
+        <button class="btn btn-soft" type="button" data-copy="p2">Скопировать</button>
+        <button class="peek" type="button" data-peek="p2">Посмотреть текст</button>
+        <div class="paper" id="p2" hidden>Возьми данные из анкеты и расчёт конвертов.
 Посчитай подушку на [N] месяцев в двух вариантах:
 — минимальная: (Текущие + мин. платежи по долгам) × N
 — с запасом: Базовый доход × N
@@ -399,40 +407,37 @@ footer .small { font-size: 13px; color: var(--muted); }
 Источники: свободный остаток конверта «Долги» + Уровень 2. Сбережения не трогай.
 
 Построй план на 12 месяцев для каждого варианта: сумма перевода каждый месяц и накопленный итог.
-Если источников не хватает — скажи, на сколько мне нужно увеличить доход на Уровне 2, чтобы накопить подушку за 12 месяцев.</pre>
-    </div>
-
-    <div class="block">
-      <div class="block-head">
-        <div class="t"><span class="pnum">Промпт 3</span><h3>Найди утечки</h3><span>Вставьте выписку за последние 2 месяца</span></div>
-        <button class="copy" type="button" data-copy="p3">Скопировать</button>
+Если источников не хватает — скажи, на сколько мне нужно увеличить доход на Уровне 2, чтобы накопить подушку за 12 месяцев.</div>
       </div>
-<pre id="p3">Вот мои траты за последние два месяца: [вставь выписку / список / скрин].
+
+      <div class="copy-card" data-id="p3">
+        <div class="head"><span class="n e-debt">3</span><div><h3>Найди утечки</h3><span>Добавьте выписку за 2 месяца и узнаете, сколько теряете в год</span></div></div>
+        <button class="btn btn-soft" type="button" data-copy="p3">Скопировать</button>
+        <button class="peek" type="button" data-peek="p3">Посмотреть текст</button>
+        <div class="paper" id="p3" hidden>Вот мои траты за последние два месяца: [вставь выписку / список / скрин].
 
 Найди до 5 категорий, где деньги уходят незаметно (если явных меньше — не выдумывай).
 Для каждой: сколько ушло за 2 месяца, сколько теряю в год (× 6), и одно простое действие, которое уменьшит расход.
-Скажи, в каком конверте у меня перерасход и сколько можно вернуть в план.</pre>
-    </div>
-
-    <div class="block">
-      <div class="block-head">
-        <div class="t"><span class="pnum">Промпт 4</span><h3>Правило для импульсных покупок</h3><span>Конверт «Радость» и идеи под вас</span></div>
-        <button class="copy" type="button" data-copy="p4">Скопировать</button>
+Скажи, в каком конверте у меня перерасход и сколько можно вернуть в план.</div>
       </div>
-<pre id="p4">Возьми из анкеты, что я покупаю не по плану и что меня заряжает.
+
+      <div class="copy-card" data-id="p4">
+        <div class="head"><span class="n e-joy">4</span><div><h3>Правило для импульсных покупок</h3><span>Конверт «Радость» и идеи, как радовать себя без вреда бюджету</span></div></div>
+        <button class="btn btn-soft" type="button" data-copy="p4">Скопировать</button>
+        <button class="peek" type="button" data-peek="p4">Посмотреть текст</button>
+        <div class="paper" id="p4" hidden>Возьми из анкеты, что я покупаю не по плану и что меня заряжает.
 
 1. Посчитай мой конверт «Радость» (15% базы) в месяц.
 2. Дай мне простое правило против импульсных покупок, подходящее именно под мои триггеры.
 3. Накидай 8–10 идей, как радовать себя на эту сумму каждый месяц — индивидуально под мои интересы. Подбирай то, что восстанавливает энергию и развивает меня, чтобы от радости росла энергия и сила зарабатывать больше.
-4. Собери из этих идей пример плана радости на месяц в рамках суммы конверта.</pre>
-    </div>
-
-    <div class="block">
-      <div class="block-head">
-        <div class="t"><span class="pnum">Промпт 5</span><h3>Цель на год</h3><span>Три сценария и рост дохода под цель и подушку</span></div>
-        <button class="copy" type="button" data-copy="p5">Скопировать</button>
+4. Собери из этих идей пример плана радости на месяц в рамках суммы конверта.</div>
       </div>
-<pre id="p5">Возьми цель из анкеты: [цель], сумма [сумма], срок [срок].
+
+      <div class="copy-card" data-id="p5">
+        <div class="head"><span class="n e-learn">5</span><div><h3>Цель на год</h3><span>Три сценария и сколько нужно зарабатывать сверху базы</span></div></div>
+        <button class="btn btn-soft" type="button" data-copy="p5">Скопировать</button>
+        <button class="peek" type="button" data-peek="p5">Посмотреть текст</button>
+        <div class="paper" id="p5" hidden>Возьми цель из анкеты: [цель], сумма [сумма], срок [срок].
 Цели копятся с Уровня 2 (доход сверху базы), после или параллельно с подушкой.
 
 1. Посчитай, сколько откладывать в месяц, в трёх сценариях:
@@ -443,39 +448,35 @@ footer .small { font-size: 13px; color: var(--muted); }
    — спокойный: средний сценарий цели + минимальная подушка
    — агрессивный: быстрый сценарий цели + подушка с запасом
 3. Предложи 5 идей для увеличения дохода на этот срок под мои навыки и свободное время.
-4. Скажи честно, какой вариант реалистичнее при моём доходе и навыках, и почему.</pre>
-    </div>
-
-    <div class="block">
-      <div class="block-head">
-        <div class="t"><span class="pnum">Промпт 6</span><h3>Обзор раз в месяц</h3><span>Бот запросит шаблон обзора и даст рекомендации</span></div>
-        <button class="copy" type="button" data-copy="p6">Скопировать</button>
+4. Скажи честно, какой вариант реалистичнее при моём доходе и навыках, и почему.</div>
       </div>
-<pre id="p6">Запроси у меня Шаблон ежемесячного обзора @fin.prim.
+
+      <div class="copy-card" data-id="p6">
+        <div class="head"><span class="n e-cur">6</span><div><h3>Обзор раз в месяц</h3><span>Бот попросит шаблон обзора и даст рекомендации</span></div></div>
+        <button class="btn btn-soft" type="button" data-copy="p6">Скопировать</button>
+        <button class="peek" type="button" data-peek="p6">Посмотреть текст</button>
+        <div class="paper" id="p6" hidden>Запроси у меня Шаблон ежемесячного обзора @fin.prim.
 Когда я его заполню:
 — сравни план и факт по каждому конверту и с прошлым месяцем;
 — покажи прогресс по подушке, цели и долгам в %;
 — отметь 1–2 победы месяца;
 — дай 3 рекомендации на следующий месяц.
-Ничего не меняй в моём плане без моего разрешения — на каждое изменение спрашивай «Применяем?».</pre>
-    </div>
+Ничего не меняй в моём плане без моего разрешения — на каждое изменение спрашивай «Применяем?».</div>
+      </div>
+    </section>
 
-  </div>
-</section>
-
-<section>
-  <div class="sec-head">
-    <div class="eyebrow">Шаг 4</div>
-    <h2>Обзор месяца</h2>
-    <p>Заполняйте в конце каждого месяца и отправляйте боту после промпта 6.</p>
-  </div>
-  <div class="block">
-    <div class="block-head">
-      <div class="t"><h3>Шаблон ежемесячного обзора</h3><span>План и факт, подушка, цель, долги, радость, итог</span></div>
-      <button class="copy" type="button" data-copy="t-review">Скопировать</button>
-    </div>
-    <details><summary>Показать текст</summary>
-<pre id="t-review">ОБЗОР МЕСЯЦА: [месяц, год]
+    <!-- 5. Monthly -->
+    <section class="screen" data-step="5" hidden>
+      <div class="intro">
+        <div class="step-label">Шаг 5 · Каждый месяц</div>
+        <h2>Обзор месяца</h2>
+        <p>В конце месяца заполните шаблон и отправьте боту вместе с промптом 6. Он сравнит план и факт и подскажет, что поправить.</p>
+      </div>
+      <div class="copy-card" data-id="review">
+        <div class="head"><span class="n e-save">↻</span><div><h3>Шаблон обзора месяца</h3><span>План и факт, подушка, цель, долги, радость, итог</span></div></div>
+        <button class="btn btn-main" type="button" data-copy="t-review">Скопировать шаблон</button>
+        <button class="peek" type="button" data-peek="t-review">Посмотреть текст</button>
+        <div class="paper" id="t-review" hidden>ОБЗОР МЕСЯЦА: [месяц, год]
 
 — ДОХОД —
 Получено всего:
@@ -519,127 +520,164 @@ footer .small { font-size: 13px; color: var(--muted); }
 — ИТОГ —
 Моя победа месяца:
 Что мешало:
-Вопрос к ассистенту:</pre>
-    </details>
-  </div>
-</section>
+Вопрос к ассистенту:</div>
+      </div>
+      <div class="tip">Поставьте в телефоне напоминание на последний день месяца: «Обзор с ботом».</div>
+      <div class="cta">
+        <b>Хотите отдать нейросетям 80% рутины, в том числе финансовой?</b>
+        <p>Напишите @fin.prim, и мы соберём для вас автономных ассистентов, которые работают, пока вы занимаетесь своими делами.</p>
+      </div>
+      <p class="fine">Шаблон помогает планировать личный бюджет и не является индивидуальной инвестиционной рекомендацией.</p>
+    </section>
 
-<footer>
-  <p class="cta">Хотите отдать нейросетям 80% рутины, в том числе финансовой? Напишите @fin.prim, и мы соберём для вас автономных ассистентов.</p>
-  <p class="small">Шаблон помогает планировать личный бюджет и не является индивидуальной инвестиционной рекомендацией.</p>
-</footer>
-
+  </main>
 </div>
+
+<nav class="nav">
+  <div class="nav-in">
+    <button class="btn btn-soft back" type="button" id="back" hidden>Назад</button>
+    <button class="btn btn-main next" type="button" id="next">Начать</button>
+  </div>
+</nav>
 
 <script>
 (function () {
-  // Copy buttons
-  document.querySelectorAll('.copy').forEach(function (btn) {
+  var $ = function (id) { return document.getElementById(id); };
+  var store = {
+    get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  };
+
+  // Steps
+  var screens = [].slice.call(document.querySelectorAll('.screen'));
+  var dots = [].slice.call(document.querySelectorAll('#dots span'));
+  var nextLabels = ['Начать', 'Дальше: создать бота', 'Дальше: анкета', 'Дальше: промпты', 'Дальше: обзор месяца', 'В начало'];
+  var step = parseInt(store.get('fp-step') || '0', 10);
+  if (!(step >= 0 && step < screens.length)) step = 0;
+
+  function show(i, scroll) {
+    step = i;
+    screens.forEach(function (s, j) { s.hidden = j !== i; });
+    dots.forEach(function (d, j) { d.classList.toggle('on', j <= i); });
+    $('step-count').textContent = i === 0 ? 'Шаблон' : 'Шаг ' + i + ' из ' + (screens.length - 1);
+    $('back').hidden = i === 0;
+    $('next').textContent = nextLabels[i];
+    store.set('fp-step', String(i));
+    if (scroll) window.scrollTo(0, 0);
+  }
+  $('next').addEventListener('click', function () { show(step === screens.length - 1 ? 0 : step + 1, true); });
+  $('back').addEventListener('click', function () { if (step > 0) show(step - 1, true); });
+
+  // ChatGPT / Claude toggle
+  document.querySelectorAll('[data-ai]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      document.querySelectorAll('[data-ai]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      $('how-gpt').hidden = b.dataset.ai !== 'gpt';
+      $('how-claude').hidden = b.dataset.ai !== 'claude';
+    });
+  });
+
+  // Peek
+  document.querySelectorAll('[data-peek]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var p = $(b.dataset.peek);
+      p.hidden = !p.hidden;
+      b.textContent = p.hidden ? 'Посмотреть текст' : 'Скрыть текст';
+    });
+  });
+
+  // Copy
+  var done = {};
+  try { done = JSON.parse(store.get('fp-done') || '{}') || {}; } catch (e) { done = {}; }
+  function markDone(card) {
+    if (!card) return;
+    card.classList.add('done');
+    var n = card.querySelector('.n');
+    if (n && !n.dataset.orig) { n.dataset.orig = n.textContent; n.textContent = '✓'; }
+  }
+  document.querySelectorAll('.copy-card').forEach(function (c) { if (done[c.dataset.id]) markDone(c); });
+
+  document.querySelectorAll('[data-copy]').forEach(function (btn) {
+    var label = btn.textContent;
     btn.addEventListener('click', function () {
-      var el = document.getElementById(btn.dataset.copy);
-      var text = el.textContent;
-      var done = function () {
-        btn.textContent = 'Скопировано';
-        btn.classList.add('done');
-        setTimeout(function () { btn.textContent = 'Скопировать'; btn.classList.remove('done'); }, 1800);
+      var el = $(btn.dataset.copy);
+      var card = btn.closest('.copy-card');
+      var ok = function () {
+        btn.textContent = 'Скопировано ✓';
+        btn.classList.add('copied');
+        markDone(card);
+        done[card.dataset.id] = 1;
+        store.set('fp-done', JSON.stringify(done));
+        setTimeout(function () { btn.textContent = label; btn.classList.remove('copied'); }, 1800);
       };
-      var fallback = function () {
-        var d = el.closest('details'); if (d) d.open = true;
+      var fail = function () {
+        el.hidden = false;
+        var peek = card.querySelector('.peek'); if (peek) peek.textContent = 'Скрыть текст';
         var r = document.createRange(); r.selectNodeContents(el);
         var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
-        btn.textContent = 'Выделено, нажмите «Копировать»';
+        btn.textContent = 'Текст выделен, нажмите «Копировать»';
       };
-      try {
-        navigator.clipboard.writeText(text).then(done, fallback);
-      } catch (e) { fallback(); }
+      try { navigator.clipboard.writeText(el.textContent).then(ok, fail); } catch (e) { fail(); }
     });
   });
 
   // Calculator
-  var ids = ['inc', 'cur', 'debt', 'months', 'saved', 'cur-sym'];
-  var $ = function (id) { return document.getElementById(id); };
   var num = function (id) { var v = parseFloat(String($(id).value).replace(/[^\d.,]/g, '').replace(',', '.')); return isFinite(v) && v > 0 ? v : 0; };
-  var r100 = function (x) { return Math.round(x / 100) * 100; };
+  var f = function (x) { return (Math.round(x / 100) * 100).toLocaleString('ru-RU') + ' ₽'; };
+  var envDefs = [
+    { n: 'Текущие', p: 0.45, c: 'e-cur', key: 'cur', wide: true },
+    { n: 'Радость', p: 0.15, c: 'e-joy' },
+    { n: 'Долги', p: 0.20, c: 'e-debt', key: 'debt' },
+    { n: 'Обучение', p: 0.10, c: 'e-learn' },
+    { n: 'Сбережения', p: 0.10, c: 'e-save' }
+  ];
 
   function calc() {
-    var sym = ' ' + ($('cur-sym').value.trim() || '₽');
-    var f = function (x) { return r100(x).toLocaleString('ru-RU') + sym; };
-    var inc = num('inc'), cur = num('cur'), debt = num('debt'), months = Math.round(num('months')), saved = num('saved');
-    var tbody = $('o-table'), verdict = $('o-verdict'), bar = $('o-bar');
-
-    if (!inc || (!cur && !debt)) {
-      $('o-base').textContent = '—'; $('o-l2').textContent = '—';
-      tbody.innerHTML = ''; bar.innerHTML = '';
-      verdict.innerHTML = '<p>Введите доход и хотя бы текущие расходы.</p>';
+    var inc = num('inc'), cur = num('cur'), debt = num('debt');
+    var ans = $('answer'), envs = $('envs');
+    if (!inc || !cur) {
+      ans.innerHTML = '<p class="lead">Введите доход и обязательные расходы, и здесь появится ваша база.</p>';
+      envs.innerHTML = '';
       return;
     }
-
     var B = Math.max(cur / 0.45, debt / 0.20);
-    var below = inc < B;
+    var below = inc < B - 50;
     var base = below ? inc : B;
-    var l2 = below ? 0 : inc - B;
-    var env = [
-      { n: 'Текущие', p: 0.45, c: 'var(--e-cur)', need: cur },
-      { n: 'Радость', p: 0.15, c: 'var(--e-joy)' },
-      { n: 'Долги', p: 0.20, c: 'var(--e-debt)', need: debt },
-      { n: 'Обучение', p: 0.10, c: 'var(--e-learn)' },
-      { n: 'Сбережения', p: 0.10, c: 'var(--e-save)' }
-    ];
-
-    $('o-base').textContent = f(B);
-    $('o-l2').textContent = f(l2);
-
-    var rows = env.map(function (e) {
-      var amt = base * e.p, need = '', res = '';
-      if (e.need !== undefined) {
-        need = f(e.need);
-        var diff = amt - e.need;
-        res = Math.abs(diff) < 50 ? '<span class="good">хватает</span>'
-          : diff > 0 ? '<span class="good">+' + f(diff) + '</span>'
-          : '<span class="bad">−' + f(-diff) + '</span>';
-      }
-      return '<tr><td><span class="dot" style="background:' + e.c + '"></span>' + e.n + ' ' + Math.round(e.p * 100) + '%</td><td class="r">' + f(amt) + '</td><td class="r">' + need + '</td><td class="r">' + res + '</td></tr>';
-    });
-    tbody.innerHTML = rows.join('');
-
-    var total = inc;
-    bar.innerHTML = env.map(function (e) { return '<div style="flex-basis:' + (base * e.p / total * 100) + '%;background:' + e.c + '"></div>'; }).join('') +
-      (l2 > 0 ? '<div style="flex-basis:' + (l2 / total * 100) + '%;background:var(--e-l2);opacity:.45"></div>' : '');
-
+    var l2 = below ? 0 : Math.max(0, inc - B);
     var freeDebt = Math.max(0, base * 0.20 - debt);
-    var cushMin = (cur + debt) * months, cushMax = B * months;
-    var leftMin = Math.max(0, cushMin - saved), leftMax = Math.max(0, cushMax - saved);
-    var avail = freeDebt + l2;
-    var html = [];
+    var need = { cur: cur, debt: debt };
 
+    var h = '';
     if (below) {
-      html.push('<p><span class="pill bad">Ниже базы</span></p>');
-      html.push('<p>Доход меньше базового на <b class="num">' + f(B - inc) + '</b>. Сначала цель — выйти на базу: тогда 45% закроют текущие, а 20% — долги.</p>');
+      h += '<span class="badge bad">Пока ниже базы</span>';
+      h += '<p class="muted">Ваша база</p><div class="big">' + f(B) + '</div>';
+      h += '<p class="lead">До базы не хватает ' + f(B - inc) + ' в месяц.</p>';
+      h += '<p class="muted">Это первая цель: выйти на доход, при котором всего хватает. Бот поможет найти, где взять эти деньги.</p>';
     } else {
-      html.push('<p><span class="pill good">База закрыта</span></p>');
+      h += '<span class="badge ok">База закрыта</span>';
+      h += '<p class="muted">Ваша база</p><div class="big">' + f(B) + '</div>';
+      h += '<p class="lead">' + (l2 > 50 ? 'Вы зарабатываете на ' + f(l2) + ' больше базы. Это ваши деньги на подушку и мечты.' : 'Вы зарабатываете ровно на базу. Всё, что заработаете сверху, пойдёт на подушку и мечты.') + '</p>';
     }
+    h += '<ul class="facts">';
+    h += '<li><span>Свободно в «Долгах», идёт в подушку</span><b>' + f(freeDebt) + '</b></li>';
+    h += '<li><span>Сверху базы, на подушку и цели</span><b>' + f(l2) + '</b></li>';
+    h += '</ul>';
+    ans.innerHTML = h;
 
-    if (months > 0) {
-      html.push('<p>Подушка на ' + months + ' мес.: минимальная <b class="num">' + f(cushMin) + '</b>, с запасом <b class="num">' + f(cushMax) + '</b>' + (saved ? ' (уже есть ' + f(saved) + ')' : '') + '.</p>');
-      if (leftMin === 0) {
-        html.push('<p class="good">Минимальная подушка уже накоплена.</p>');
-      } else {
-        var need12 = leftMin / 12;
-        html.push('<p>Чтобы собрать минимальную подушку за 12 месяцев, нужно <b class="num">' + f(need12) + '</b> в месяц. Сейчас доступно <b class="num">' + f(avail) + '</b> (остаток «Долгов» ' + f(freeDebt) + ' + Уровень 2 ' + f(l2) + ').</p>');
-        if (avail >= need12 - 50) {
-          html.push('<p class="good">Хватает. Подушка соберётся за ' + Math.ceil(leftMin / avail) + ' мес.</p>');
-        } else {
-          var gap = need12 - avail;
-          html.push('<p>Не хватает <b class="num bad">' + f(gap) + '</b> в месяц. Столько нужно зарабатывать сверху базы' + (below ? ', после того как выйдете на базу' : '') + '.' +
-            (avail > 0 ? ' В текущем темпе подушка соберётся за ' + Math.ceil(leftMin / avail) + ' мес.' : '') + '</p>');
-        }
+    envs.innerHTML = envDefs.map(function (e) {
+      var amt = base * e.p, st = '';
+      if (e.key) {
+        var diff = amt - need[e.key];
+        st = diff >= -50 ? (diff > 50 ? 'хватает, +' + f(diff) : 'хватает') : 'не хватает ' + f(-diff);
+        st = '<span class="st">' + (diff >= -50 ? '✓ ' : '! ') + st + '</span>';
       }
-    }
-    verdict.innerHTML = html.join('');
+      return '<div class="env ' + e.c + (e.wide ? ' wide' : '') + '"><span class="pc">' + Math.round(e.p * 100) + '%</span><span class="nm">' + e.n + '</span><span class="am">' + f(amt) + '</span>' + st + '</div>';
+    }).join('');
   }
+  ['inc', 'cur', 'debt'].forEach(function (id) { $(id).addEventListener('input', calc); });
+  $('calc').addEventListener('submit', function (e) { e.preventDefault(); });
 
-  ids.forEach(function (id) { $(id).addEventListener('input', calc); });
-  $('calc-form').addEventListener('submit', function (e) { e.preventDefault(); });
   calc();
+  show(step, false);
 })();
 </script>
