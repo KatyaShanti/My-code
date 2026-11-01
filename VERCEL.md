@@ -22,5 +22,5 @@
 ## Аналитика мини-курса (Telegram-бот)
 1. Нужны хранилище и `STATS_KEY` из «Счётчика воронки» выше.
 2. В боте-продажнике (Railway) та же переменная `STATS_KEY` — бот шлёт цифры на `/api/course-sync` в 8:00 и 18:00 МСК.
-3. Для кнопки «Обновить данные»: Vercel → Environment Variables → `BOT_URL` = адрес бота на Railway (например, `https://sales-agent-production.up.railway.app`), потом Redeploy.
+3. Кнопка «Обновить данные» зовёт бота по адресу `https://sales-agent-production-4dce.up.railway.app` (домен Railway, порт 8080). Другой адрес — переменная `BOT_URL` в Vercel.
 4. Отчёт: `https://<адрес сайта>/api/course?key=<STATS_KEY>`. Переключатели: сегодня, 7, 30, 90 дней, всё время.
