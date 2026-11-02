@@ -46,6 +46,12 @@ module.exports = async (req, res) => {
   const started = n('started');
   const rows = ROWS.map(([k, label]) => `<tr><td>${esc(label)}</td>
     <td class="n">${n(`${k}_self`)}</td><td class="n">${n(`${k}_personal`)}</td></tr>`).join('');
+  const days = [1, 2, 3, 4, 5, 6, 7].map((d) => {
+    const got = n(`day${d}`);
+    const prev = d === 1 ? started : n(`day${d - 1}`);
+    return `<tr><td>День ${d}${d === 7 ? ' (итог)' : ''}</td><td class="n">${got}</td>
+    <td class="n">${pct(got, started)}</td><td class="n">${pct(got, prev)}</td></tr>`;
+  }).join('');
   const notes = { ok: 'Бот прислал свежие цифры.', fail: 'Бот сейчас не ответил. Цифры ниже — с прошлого обновления.', off: 'Кнопка ещё не подключена к боту (нет BOT_URL).' };
   const note = notes[req.query.r] ? `<p class="note ${req.query.r === 'ok' ? '' : 'warn'}">${notes[req.query.r]}</p>` : '';
 
@@ -61,6 +67,9 @@ nav a.on{background:#5DB58C;color:#0E3B27;border-color:#5DB58C}
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:20px}
 .card{border:1px solid #2C3530;border-radius:12px;padding:12px}.card b{display:block;font-size:28px;font-variant-numeric:tabular-nums}.card span{color:#93A39A;font-size:13px}
 .card.paid{border-color:#5DB58C}
+.main{border:1px solid #5DB58C;background:#12241B;border-radius:14px;padding:16px;margin-bottom:16px}
+.main b{display:block;font-size:44px;line-height:1.1;color:#5DB58C;font-variant-numeric:tabular-nums}.main span{color:#C9D6CF}
+h2{font-size:17px;margin:22px 0 8px}
 .wrap{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:420px}
 th,td{padding:10px 8px;border-bottom:1px solid #2C3530;text-align:left}th{color:#93A39A;font-weight:500;font-size:13px}
 .n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;font-size:17px}
@@ -71,13 +80,18 @@ button:disabled{opacity:.6}.note{color:#5DB58C}.note.warn{color:#E8B04A}.small{f
 ${note}
 <form method="post" action="${link(p)}" onsubmit="this.querySelector('button').disabled=true;this.querySelector('button').textContent='Обновляю…'"><button type="submit">Обновить данные</button></form>
 <nav>${PERIODS.map(([k, label]) => `<a class="${k === p ? 'on' : ''}" href="${link(k)}">${label}</a>`).join('')}</nav>
+<div class="main"><span>Главная конверсия: начали курс → оплатили</span><b>${pct(n('paid'), started)}</b>
+<span>${n('paid')} из ${started}</span></div>
 <div class="cards">
 <div class="card"><b>${started}</b><span>Начали курс</span></div>
 <div class="card"><b>${n('day7')}</b><span>Дошли до итога дня 7</span></div>
 <div class="card paid"><b>${n('paid')}</b><span>Оплатили · ${pct(n('paid'), started)} от начавших</span></div>
 </div>
+<h2>Прохождение по дням</h2>
+<div class="wrap"><table><tr><th>День курса</th><th class="n">Получили</th><th class="n">От начавших</th><th class="n">От прошлого дня</th></tr>${days}</table></div>
+<h2>Тарифы</h2>
 <div class="wrap"><table><tr><th>Шаг</th><th class="n">Самостоятельный</th><th class="n">Личный</th></tr>${rows}</table></div>
-<p class="small">Люди считаются по дню, когда сделали шаг. «Активировали»: написали МЕД или ХОЧУ (самостоятельный), ХОЧУ (личный).
+<p class="small">Люди считаются по дню, когда сделали шаг: «Получили день 3 за 7 дней» — кому день 3 пришёл за эти 7 дней. «Активировали»: написали МЕД или ХОЧУ (самостоятельный), ХОЧУ (личный).
 «Оплатили» — люди в папке 🥂. Для шагов до 01.11 день взят из записи курса, а если его нет — день старта курса.</p>
 </body></html>`);
 };
