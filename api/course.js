@@ -87,10 +87,10 @@ ${note}
 <div class="card"><b>${n('day7')}</b><span>Дошли до итога дня 7</span></div>
 <div class="card paid"><b>${n('paid')}</b><span>Оплатили · ${pct(n('paid'), started)} от начавших</span></div>
 </div>
-<h2>Прохождение по дням</h2>
-<div class="wrap"><table><tr><th>День курса</th><th class="n">Получили</th><th class="n">От начавших</th><th class="n">От прошлого дня</th></tr>${days}</table></div>
 <h2>Тарифы</h2>
 <div class="wrap"><table><tr><th>Шаг</th><th class="n">Самостоятельный</th><th class="n">Личный</th></tr>${rows}</table></div>
+<h2>Прохождение по дням</h2>
+<div class="wrap"><table><tr><th>День курса</th><th class="n">Получили</th><th class="n">От начавших</th><th class="n">От прошлого дня</th></tr>${days}</table></div>
 <p class="small">Люди считаются по дню, когда сделали шаг: «Получили день 3 за 7 дней» — кому день 3 пришёл за эти 7 дней. «Активировали»: написали МЕД или ХОЧУ (самостоятельный), ХОЧУ (личный).
 «Оплатили» — люди в папке 🥂. Для шагов до 01.11 день взят из записи курса, а если его нет — день старта курса.</p>
 </body></html>`);
