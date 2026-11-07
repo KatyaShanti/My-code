@@ -10,7 +10,7 @@ const pct = (a, b) => (b ? `${Math.round((a / b) * 100)}%` : '—');
 const msk = (ts) => new Date(ts * 1000).toLocaleString('ru-RU', { timeZone: 'Europe/Moscow', day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
 
 async function refresh(secret) {
-  const bot = (process.env.BOT_URL || 'https://sales-agent-production-4dce.up.railway.app').replace(/\/$/, '');
+  const bot = (process.env.BOT_URL || 'http://45.13.233.72:8080').replace(/\/$/, '');
   if (!bot) return 'off';
   try {
     const r = await fetch(`${bot}/stats/course/refresh`, { method: 'POST', headers: { 'X-Stats-Key': secret } });
