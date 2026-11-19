@@ -252,7 +252,7 @@ input[type=range]{width:100%;accent-color:var(--fg)}
       <div class="env">
         <div class="env-head"><div><div class="env-name"><i class="dot" style="background:var(--c-debt)"></i>Долги</div><div class="env-sub">20% от дохода</div></div><div class="env-sum" id="e1"></div></div>
         <div class="hr"></div>
-        <label class="f">Обязательные платежи по долгам за месяц, ₽<input class="in" id="debt" inputmode="numeric" placeholder="Если долгов нет — напиши 0" autocomplete="off"></label>
+        <label class="f">Обязательные платежи по долгам за месяц, ₽<input class="in" id="debt" inputmode="numeric" placeholder="Нет долгов — оставь пустым" autocomplete="off"></label>
         <div class="row" id="debtRes"></div>
       </div>
       <div class="env"><div class="env-head"><div><div class="env-name"><i class="dot" style="background:var(--c-sav)"></i>Сбережения</div><div class="env-sub">10% от дохода</div></div><div class="env-sum" id="e3"></div></div></div>
@@ -632,7 +632,7 @@ function update(){
   const c=calc();
   const done=[];
   done[0]=c.earned>0;
-  done[1]=done[0]&&has(S.exp)&&has(S.debt);
+  done[1]=done[0]&&has(S.exp);   // долги необязательны: пусто = долгов нет (0)
   const s3open=done[1]&&S.consent;
   done[2]=c.confirmed;
   const joySum=JOY.reduce((a,_,i)=>a+((S.joy[i]||{}).on?num((S.joy[i]||{}).amt):0),0)+S.joyCustom.reduce((a,x)=>a+num(x.amt),0);
