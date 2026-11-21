@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Предзапись на разборы</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700&display=swap">
+<style>
+/* Layout: одна узкая колонка, форма как письмо. Фиолетовый акцент из палитры Кати. */
+:root {
+  --bg: #f6f4f8;
+  --card: #ffffff;
+  --fg: #231c2b;
+  --muted: #6b6277;
+  --line: #ded8e6;
+  --accent: #7a3e9d;
+  --accent-fg: #ffffff;
+  --accent-soft: #efe6f5;
+  --danger: #b3261e;
+  --font-head: "Manrope", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Inter", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #17131c; --card: #211b29; --fg: #f1ecf6; --muted: #a79eb4;
+    --line: #382f45; --accent: #c79be3; --accent-fg: #1b1223; --accent-soft: #2c2238;
+    --danger: #ff8a80; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #17131c; --card: #211b29; --fg: #f1ecf6; --muted: #a79eb4;
+  --line: #382f45; --accent: #c79be3; --accent-fg: #1b1223; --accent-soft: #2c2238;
+  --danger: #ff8a80; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 32px 56px;
+}
+main { max-width: 600px; margin: 0 auto; }
+h1 {
+  font-family: var(--font-head); font-size: clamp(1.6rem, 6vw, 2.1rem);
+  line-height: 1.15; margin: 0 0 12px; text-wrap: balance;
+}
+.lead { color: var(--muted); margin: 0 0 28px; }
+form { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 24px; display: grid; gap: 20px; }
+label { display: grid; gap: 6px; font-weight: 500; font-size: 0.95rem; }
+.opt { color: var(--muted); font-weight: 400; }
+input, textarea {
+  font: inherit; color: var(--fg); background: var(--bg);
+  border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; width: 100%;
+}
+textarea { min-height: 110px; resize: vertical; }
+input:focus-visible, textarea:focus-visible, button:focus-visible, a:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 2px;
+}
+button {
+  font: inherit; font-weight: 600; cursor: pointer; border: 0; border-radius: 10px;
+  background: var(--accent); color: var(--accent-fg); padding: 14px 20px;
+}
+button:disabled { opacity: 0.6; cursor: default; }
+.err { color: var(--danger); font-size: 0.92rem; margin: 0; }
+.thanks { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 28px 24px; }
+.thanks h2 { font-family: var(--font-head); font-size: 1.4rem; margin: 0 0 12px; }
+.thanks p { margin: 0 0 12px; }
+.tg { display: inline-block; margin-top: 4px; padding: 10px 16px; border-radius: 10px; background: var(--accent-soft); color: var(--accent); font-weight: 600; text-decoration: none; }
+</style>
+
+</head>
+<body>
+<main>
+  <h1>Предзапись на бесплатные разборы 2027</h1>
+  <p class="lead">Бесплатные места откроется в 2027 году. Заполните анкету, и я сообщу вам, когда откроется окно.</p>
+
+  <form id="form" novalidate>
+    <label for="f-name">Как ваше имя
+      <input id="f-name" name="name" type="text" autocomplete="given-name" required>
+    </label>
+    <label for="f-city">Ваш город
+      <input id="f-city" name="city" type="text" autocomplete="address-level2" required>
+    </label>
+    <label for="f-tg">Ваш Telegram
+      <input id="f-tg" name="telegram" type="text" placeholder="@username" autocapitalize="none" required>
+    </label>
+    <label for="f-request">Какой у вас основной запрос или проблема
+      <textarea id="f-request" name="request" required></textarea>
+    </label>
+    <label for="f-since">Как давно вы в этой ситуации
+      <input id="f-since" name="since" type="text" required>
+    </label>
+    <label for="f-tried">Что вы уже пробовали, но это не помогло
+      <textarea id="f-tried" name="tried" required></textarea>
+    </label>
+    <label for="f-result">Что будет, если эта ситуация решится для вас
+      <textarea id="f-result" name="result" required></textarea>
+    </label>
+    <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;height:0;width:0;opacity:0">
+    <p class="err" id="err" role="alert" hidden></p>
+    <button type="submit" id="send">Отправить</button>
+  </form>
+
+  <section class="thanks" id="thanks" hidden>
+    <h2>Спасибо, анкета принята</h2>
+    <p>Когда откроется окно и снова появятся бесплатные места, я сообщу вам. Вы узнаете об этом в первую очередь.</p>
+    <p>Если хотите записаться на платную консультацию, пишите мне в Telegram:</p>
+    <a class="tg" href="https://t.me/katya_couch" target="_blank" rel="noopener">Катя Коуч</a>
+  </section>
+</main>
+
+<script>
+(function () {
+  var form = document.getElementById("form");
+  var err = document.getElementById("err");
+  var send = document.getElementById("send");
+  var thanks = document.getElementById("thanks");
+  var labels = { name: "имя", city: "город", telegram: "Telegram", request: "основной запрос", since: "как давно", tried: "что пробовали", result: "что будет, если решится" };
+  function fail(msg) { err.textContent = msg; err.hidden = false; }
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    err.hidden = true;
+    var data = {};
+    for (var k in labels) {
+      var v = form.elements[k].value.trim();
+      if (!v) { fail("Заполните поле: " + labels[k] + "."); form.elements[k].focus(); return; }
+      data[k] = v;
+    }
+    data.website = form.elements.website.value; // скрытое поле-ловушка для ботов
+    send.disabled = true;
+    send.textContent = "Отправляю…";
+    try {
+      var r = await fetch("/api/submit", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
+      if (!r.ok) throw new Error("http " + r.status);
+      form.hidden = true;
+      thanks.hidden = false;
+      window.scrollTo(0, 0);
+    } catch (x) {
+      send.disabled = false;
+      send.textContent = "Отправить";
+      fail("Не получилось отправить анкету. Попробуйте ещё раз или напишите мне в Telegram: Катя Коуч (@katya_couch).");
+    }
+  });
+})();
+</script>
+</body>
+</html>
