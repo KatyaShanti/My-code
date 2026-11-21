@@ -20,18 +20,7 @@
   --font-head: "Manrope", "Segoe UI", system-ui, sans-serif;
   --font-body: "Inter", "Segoe UI", system-ui, sans-serif;
 }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #17131c; --card: #211b29; --fg: #f1ecf6; --muted: #a79eb4;
-    --line: #382f45; --accent: #c79be3; --accent-fg: #1b1223; --accent-soft: #2c2238;
-    --danger: #ff8a80; color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #17131c; --card: #211b29; --fg: #f1ecf6; --muted: #a79eb4;
-  --line: #382f45; --accent: #c79be3; --accent-fg: #1b1223; --accent-soft: #2c2238;
-  --danger: #ff8a80; color-scheme: dark;
-}
+:root { color-scheme: light; }   /* всегда светлая страница и фиолетовая кнопка, без тёмной темы телефона */
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
 body {
