@@ -333,120 +333,78 @@ input[type=range]{width:100%;accent-color:var(--fg)}
 
   <!-- 06 -->
   <section class="step" id="s6">
-    <h2><span>06</span>· Финансовая подушка</h2>
-    <p class="lead">Отдельный резерв на непредвиденное. Это не конверт «Сбережения», и цели из подушки не финансируем.</p>
+    <h2><span>06</span>· Выводы</h2>
+    <p class="lead">Что показали твои цифры и что с этим делать.</p>
     <div id="s6lock" class="lock"></div>
     <div id="s6body" hidden style="display:flex;flex-direction:column;gap:14px">
-      <div class="panel">
-        <div class="ico-row"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></div><div><div class="k muted small">Цель на 6 месяцев обязательных расходов</div><div class="big" id="cTarget"></div></div></div>
-        <div class="bar"><i id="cBar"></i></div>
-        <div class="row"><span class="k">Уже есть</span><span class="v" id="cHaveOut"></span></div>
-        <div class="row"><span class="k">Осталось до цели</span><span class="v" id="cLeft"></span></div>
+      <div id="concl" style="display:flex;flex-direction:column;gap:12px"></div>
+      <div class="offer">
+        <span class="tag">🎁 Бесплатно</span>
+        <h3>Разбери свою ситуацию с Катей</h3>
+        <p class="note" id="ctaText">На бесплатной консультации Катя посмотрит твои цифры и подскажет, с чего начать.</p>
+        <a class="btn" id="sendVerdict" target="_blank" rel="noopener" href="https://t.me/Katyafinanc">Записаться на бесплатную консультацию</a>
+        <p class="note small" style="text-align:center">Откроется Telegram «Катя Финанс» с твоими цифрами. Останется нажать «Отправить».</p>
       </div>
-      <div class="grid2">
-        <label class="f">Уже есть в подушке, ₽<input class="in sm" id="cHave" inputmode="numeric" placeholder="0" autocomplete="off"></label>
-        <label class="f">За сколько месяцев собрать?<input class="in sm" id="cMonths" inputmode="numeric" placeholder="Например, 12" autocomplete="off"></label>
-      </div>
-      <div id="cRes"></div>
+      <button class="linkbtn" id="copy" hidden></button><p class="note" id="copyNote" hidden></p>
     </div>
   </section>
 
-  <!-- 07 -->
-  <section class="step" id="s7">
-    <h2><span>07</span>· Мои финансовые цели</h2>
-    <p class="lead">Для каждой цели укажи, сколько уже отложено именно на неё. Одни и те же деньги дважды не считаем.</p>
-    <div id="s7lock" class="lock"></div>
-    <div id="s7body" hidden style="display:flex;flex-direction:column;gap:12px">
-      <div id="goals" class="list"></div>
-      <button class="btn ghost" id="addGoal">+ Добавить цель</button>
+  <div class="offer course">
+    <span class="tag">🎁 Подарок после навигатора</span>
+    <h3>Мини-курс «Финансы на кухне»</h3>
+    <div class="price" id="coursePrice" style="font-size:22px;font-weight:700">990 ₽</div>
+    <p class="note">7 дней в Telegram. Каждый день голосовое от Кати, короткий урок и задание. Разберёшься, почему деньги утекают и откуда тревога, превратишь мечту в цель с планом и найдёшь, что даёт тебе силы расти в доходе.</p>
+    <ol class="prog">
+      <li>Почему всё складывается не так, как хочется</li>
+      <li>Почему в кризис уходят деньги</li>
+      <li>Базовая тревожность</li>
+      <li>Мечта → цель → план</li>
+      <li>Три фактора успеха: цель на 2 года</li>
+      <li>Третий фактор успеха — ты</li>
+      <li>Итог и твой следующий шаг</li>
+    </ol>
+    <p class="note"><b id="courseTimer"></b></p>
+    <button class="btn btn-y" id="actBtn">Активировать участие за 0 ₽</button>
+    <form id="actForm" hidden style="display:flex;flex-direction:column;gap:10px">
+      <label class="f">Как тебя зовут?<input class="in sm" id="actName" required autocomplete="given-name" placeholder="Имя"></label>
+      <label class="f">Твой Telegram<input class="in sm" id="actTg" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="@username"></label>
+      <p class="note small red" id="actErr" hidden>Напиши ник в Telegram с собачкой, латинскими буквами, например @katya_fin</p>
+      <button class="btn" type="submit">Активировать</button>
+    </form>
+    <div id="actDone" hidden style="display:flex;flex-direction:column;gap:10px">
+      <div class="verdict good"><b id="actDoneText"></b><span class="small">Остался последний шаг: нажми кнопку и отправь сообщение Кате в Telegram.</span></div>
+      <a class="btn" id="actGo" target="_blank" rel="noopener" href="https://t.me/katyafinanc?text=%D0%9A%D0%A3%D0%A5%D0%9D%D0%AF">Записаться на курс</a>
     </div>
-  </section>
+  </div>
 
-  <!-- 08 -->
-  <section class="step" id="s8">
-    <h2><span>08</span>· План и следующий шаг</h2>
-    <p class="lead">Сравни варианты и выбери один, с которого начнёшь. Нагрузку сравниваем с доходом сверх базы.</p>
-    <div id="s8lock" class="lock"></div>
-    <div id="s8body" hidden style="display:flex;flex-direction:column;gap:12px">
-      <label class="f" id="scGoalWrap">Цель для сценариев В и Г<select class="in sm" id="scGoal"></select></label>
-      <div id="scens" class="list"></div>
-      <div id="next" hidden style="display:flex;flex-direction:column;gap:12px">
-        <div class="verdict good"><b id="nextTitle"></b><span class="small" id="nextText"></span></div>
-        <div class="offer" id="ideasAsk"><h3>Хочешь, подумаем, как получить нужную сумму для этой цели?</h3><button class="btn" id="ideasYes">Да, давай</button></div>
-        <div class="step" id="ideas" hidden style="padding:18px">
-          <h2 style="font-size:21px">Идеи для расширения дохода</h2>
-          <p class="lead">Выбери действия, которые готов(а) сделать в этом месяце. Ожидаемые продажи — ещё не деньги: в доход записываем только то, что пришло.</p>
-          <div class="list" id="ideaList"></div>
-          <div class="muted small" id="ideaCount"></div>
-          <p class="note">🎙️ <a class="green" target="_blank" rel="noopener" href="https://t.me/fin_prim/450">Слушай подкаст «5 шагов к увеличению дохода»</a> в Telegram-канале.</p>
-        </div>
-        <div style="font-weight:600;font-size:18px;margin-top:6px">Если хочешь двигаться быстрее</div>
-        <div class="offer">
-          <h3>Личная консультация с Катей</h3>
-          <p class="note">Разберёте твою ситуацию: как получить нужную сумму для выбранной цели, долги, доход.</p>
-          <a class="btn" target="_blank" rel="noopener" href="https://t.me/Katyacoach?text=%D0%9A%D0%B0%D1%82%D1%8F%20%D0%BF%D1%80%D0%B8%D0%B2%D0%B5%D1%82%2C%20%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE%20%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C%D1%81%D1%8F%20%D0%BD%D0%B0%20%D0%A4%D0%98%D0%9D%D0%90%D0%9D%D0%A1%D0%9E%D0%92%D0%A3%D0%AE%20%D0%9A%D0%9E%D0%9D%D0%A1%D0%A3%D0%9B%D0%AC%D0%A2%D0%90%D0%A6%D0%98%D0%AE">Записаться в Telegram</a>
-        </div>
-        <div class="offer invest">
-          <h3 class="hl">Как быстрее накопить на цели</h3>
-          <p class="note">Деньги на цели можно не только откладывать, но и инвестировать. Тогда их растит сложный процент: доход начисляется и на вложенное, и на уже заработанное. Начать можно с 1 000 ₽.</p>
-          <div class="grid2">
-            <label class="f">Стартовая сумма, ₽<input class="in sm" id="iStart" inputmode="numeric" autocomplete="off"></label>
-            <label class="f">Пополнение в месяц, ₽<input class="in sm" id="iMonthly" inputmode="numeric" autocomplete="off"></label>
-          </div>
-          <div class="f muted" style="font-weight:500">Срок, лет</div>
-          <div class="slider"><div class="track"><input type="range" id="iYears" min="1" max="50" step="1" aria-label="Срок, лет"><div class="ticks"><span>1</span><span>25</span><span>50</span></div></div><div class="daybox"><b id="iYearsOut"></b><span id="iYearsWord"></span></div></div>
-          <label class="f">Доходность, % годовых<input class="in sm" id="iRate" inputmode="numeric" autocomplete="off"></label>
-          <div class="panel">
-            <div class="k muted" id="iTitle"></div>
-            <div class="huge" id="iTotal"></div>
-            <div class="stack"><i id="iOwnBar" style="background:var(--muted)"></i><i id="iIntBar" style="background:var(--accent)"></i></div>
-            <div class="row small"><span class="k"><i class="dot" style="background:var(--muted)"></i>&nbsp;Вложено своих</span><span class="v" id="iOwn"></span></div>
-            <div class="row small"><span class="k"><i class="dot" style="background:var(--accent)"></i>&nbsp;Заработано процентами</span><span class="v green" id="iInt"></span></div>
-            <div class="growth" id="iGrowth" aria-hidden="true"></div>
-          </div>
-          <p class="note">💡 Передвинь бегунок: попробуй цели на 3, 5, 10, 20 и 30 лет и посмотри, как меняется результат. Чем длиннее срок, тем сильнее работает сложный процент.</p>
-          <p class="note small">15% — пример для расчёта, а не обещание. Реальная доходность зависит от рынка, инструментов, комиссий и налогов, и вложения могут дешеветь.</p>
-          <div class="hr"></div>
-          <h3>Хочешь, я помогу создать инвестиционный портфель с целевой доходностью 18–20% годовых?</h3>
-          <div class="list small">
-            <div class="row"><span class="k">1. Реорганизация существующего портфеля</span></div>
-            <div class="row"><span class="k">2. Создание портфеля с нуля</span></div>
-          </div>
-          <a class="btn" target="_blank" rel="noopener" href="https://t.me/Katyafinanc?text=%D0%9F%D0%9E%D0%A0%D0%A2%D0%A4%D0%95%D0%9B%D0%AC">Записаться на консультацию по портфелю</a>
-        </div>
-        <div class="offer course">
-          <span class="tag">🎁 Подарок после навигатора</span>
-          <h3>Мини-курс «Финансы на кухне»</h3>
-          <div class="price" id="coursePrice" style="font-size:22px;font-weight:700">990 ₽</div>
-          <p class="note">7 дней в Telegram. Каждый день голосовое от Кати, короткий урок и задание. Разберёшься, почему деньги утекают и откуда тревога, превратишь мечту в цель с планом и найдёшь, что даёт тебе силы расти в доходе.</p>
-          <ol class="prog">
-            <li>Почему всё складывается не так, как хочется</li>
-            <li>Почему в кризис уходят деньги</li>
-            <li>Базовая тревожность</li>
-            <li>Мечта → цель → план</li>
-            <li>Три фактора успеха: цель на 2 года</li>
-            <li>Третий фактор успеха — ты</li>
-            <li>Итог и твой следующий шаг</li>
-          </ol>
-          <p class="note"><b id="courseTimer"></b></p>
-          <button class="btn btn-y" id="actBtn">Активировать участие за 0 ₽</button>
-          <form id="actForm" hidden style="display:flex;flex-direction:column;gap:10px">
-            <label class="f">Как тебя зовут?<input class="in sm" id="actName" required autocomplete="given-name" placeholder="Имя"></label>
-            <label class="f">Твой Telegram<input class="in sm" id="actTg" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="@username"></label>
-            <p class="note small red" id="actErr" hidden>Напиши ник в Telegram с собачкой, латинскими буквами, например @katya_fin</p>
-            <button class="btn" type="submit">Активировать</button>
-          </form>
-          <div id="actDone" hidden style="display:flex;flex-direction:column;gap:10px">
-            <div class="verdict good"><b id="actDoneText"></b><span class="small">Остался последний шаг: нажми кнопку и отправь сообщение Кате в Telegram.</span></div>
-            <a class="btn" id="actGo" target="_blank" rel="noopener" href="https://t.me/katyafinanc?text=%D0%9A%D0%A3%D0%A5%D0%9D%D0%AF">Записаться на курс</a>
-          </div>
-        </div>
-        <a class="btn ghost" id="sendVerdict" target="_blank" rel="noopener" href="https://t.me/Katyafinanc">Отправить Кате мои цифры</a>
-        <p class="note small" style="text-align:center;margin-top:-4px">🎁 Бесплатный финансовый вердикт: Катя лично посмотрит твою ситуацию. Откроется Telegram с готовым сообщением.</p>
-        <button class="linkbtn" id="copy" hidden></button><p class="note" id="copyNote" hidden></p>
-      </div>
+  <div class="offer invest">
+    <h3 class="hl">Как быстрее накопить на цели</h3>
+    <p class="note">Деньги на цели можно не только откладывать, но и инвестировать. Тогда их растит сложный процент: доход начисляется и на вложенное, и на уже заработанное. Начать можно с 1 000 ₽.</p>
+    <div class="grid2">
+      <label class="f">Стартовая сумма, ₽<input class="in sm" id="iStart" inputmode="numeric" autocomplete="off"></label>
+      <label class="f">Пополнение в месяц, ₽<input class="in sm" id="iMonthly" inputmode="numeric" autocomplete="off"></label>
     </div>
-  </section>
+    <div class="f muted" style="font-weight:500">Срок, лет</div>
+    <div class="slider"><div class="track"><input type="range" id="iYears" min="1" max="50" step="1" aria-label="Срок, лет"><div class="ticks"><span>1</span><span>25</span><span>50</span></div></div><div class="daybox"><b id="iYearsOut"></b><span id="iYearsWord"></span></div></div>
+    <label class="f">Доходность, % годовых<input class="in sm" id="iRate" inputmode="numeric" autocomplete="off"></label>
+    <div class="panel">
+      <div class="k muted" id="iTitle"></div>
+      <div class="huge" id="iTotal"></div>
+      <div class="stack"><i id="iOwnBar" style="background:var(--muted)"></i><i id="iIntBar" style="background:var(--accent)"></i></div>
+      <div class="row small"><span class="k"><i class="dot" style="background:var(--muted)"></i>&nbsp;Вложено своих</span><span class="v" id="iOwn"></span></div>
+      <div class="row small"><span class="k"><i class="dot" style="background:var(--accent)"></i>&nbsp;Заработано процентами</span><span class="v green" id="iInt"></span></div>
+      <div class="growth" id="iGrowth" aria-hidden="true"></div>
+    </div>
+    <p class="note">💡 Передвинь бегунок: попробуй цели на 3, 5, 10, 20 и 30 лет и посмотри, как меняется результат. Чем длиннее срок, тем сильнее работает сложный процент.</p>
+    <p class="note small">15% — пример для расчёта, а не обещание. Реальная доходность зависит от рынка, инструментов, комиссий и налогов, и вложения могут дешеветь.</p>
+    <div class="hr"></div>
+    <h3>Хочешь, я помогу создать инвестиционный портфель с целевой доходностью 18–20% годовых?</h3>
+    <div class="list small">
+      <div class="row"><span class="k">1. Реорганизация существующего портфеля</span></div>
+      <div class="row"><span class="k">2. Создание портфеля с нуля</span></div>
+    </div>
+    <a class="btn" target="_blank" rel="noopener" href="https://t.me/Katyafinanc?text=%D0%9F%D0%9E%D0%A0%D0%A2%D0%A4%D0%95%D0%9B%D0%AC">Записаться на консультацию по портфелю</a>
+  </div>
 
   <section class="step" id="about">
     <h2>Катя Шанти, фея финансов 🧚‍♀️</h2>
@@ -475,8 +433,7 @@ const SHARES=[.45,.20,.15,.10,.10];
 const ENV=[['Текущие расходы','--c-exp'],['Долги','--c-debt'],['Радость','--c-joy'],['Сбережения','--c-sav'],['Обучение','--c-edu']];
 const ORDER=[0,4,2,1,3];
 const JOY=['Красота и уход','Дом и уют','Впечатления и прогулки','Отдых и восстановление','Хобби и творчество','Встречи с близкими','Маленькое желание'];
-const IDEAS=['Поднять цены на свои услуги','Предложить допродажу текущим клиентам','Попросить рекомендации и отзывы','Запустить новый канал привлечения','Добавить новую услугу или продукт','Взять дополнительный проект','Обсудить повышение зарплаты','Продать то, чем не пользуюсь','Своя идея'];
-const STEPS=['Доход','Конверты','База','Радость','Сверх базы','Подушка','Цели','План'];
+const STEPS=['Доход','Конверты','База','Радость','Сверх базы','Выводы'];
 const $=id=>document.getElementById(id);
 
 function defDays(){const d=new Date();return new Date(d.getFullYear(),d.getMonth()+1,0).getDate()-d.getDate()+1;}
@@ -498,7 +455,7 @@ function show(id,on){const el=$(id);el.hidden=!on;if(on&&el.style.display==='non
 // ---- поля ввода, связанные со state
 function bindMoney(id,key){const el=$(id);el.value=fmtIn(S[key]);
   el.addEventListener('input',()=>{const pos=el.value.length-el.selectionStart;S[key]=el.value.replace(/\D/g,'');el.value=fmtIn(S[key]);const p=Math.max(0,el.value.length-pos);try{el.setSelectionRange(p,p);}catch(e){}save();update();});}
-['earned','plan','exp','debt','cHave','cMonths'].forEach(k=>bindMoney(k,k));
+['earned','plan','exp','debt'].forEach(k=>bindMoney(k,k));
 document.querySelectorAll('input[name=type]').forEach(r=>{r.checked=r.value===S.type;r.addEventListener('change',()=>{S.type=r.value;save();update();});});
 const daysEl=$('days');daysEl.value=S.days;daysEl.addEventListener('input',()=>{S.days=+daysEl.value;save();update();});
 
@@ -519,28 +476,7 @@ $('joyCustom').addEventListener('input',e=>{const t=e.target;if(!t.dataset.k)ret
   if(t.dataset.k==='name')x.name=t.value;else{x.amt=t.value.replace(/\D/g,'');t.value=fmtIn(x.amt);}save();update();});
 $('joyCustom').addEventListener('click',e=>{const d=e.target.dataset.jdel;if(d===undefined)return;S.joyCustom.splice(+d,1);save();renderJoyCustom();update();});
 $('addJoy').addEventListener('click',()=>{S.joyCustom.push({name:'',amt:''});save();renderJoyCustom();update();const ins=$('joyCustom').querySelectorAll('input[data-k=name]');ins[ins.length-1]?.focus();});
-function renderGoals(){
-  $('goals').innerHTML=S.goals.map((g,i)=>`<div class="goal">
-    <label class="f">Цель<input class="in sm" data-g="${i}" data-k="name" value="${(g.name||'').replace(/"/g,'&quot;')}" placeholder="Например, ноутбук" autocomplete="off"></label>
-    <div class="grid2">
-      <label class="f">Стоимость, ₽<input class="in sm" data-g="${i}" data-k="cost" inputmode="numeric" value="${fmtIn(g.cost)}" placeholder="100 000" autocomplete="off"></label>
-      <label class="f">Уже отложено, ₽<input class="in sm" data-g="${i}" data-k="saved" inputmode="numeric" value="${fmtIn(g.saved)}" placeholder="0" autocomplete="off"></label>
-    </div>
-    <label class="f">Срок, месяцев<input class="in sm" data-g="${i}" data-k="months" inputmode="numeric" value="${fmtIn(g.months)}" placeholder="6" autocomplete="off"></label>
-    <div class="panel" id="gres${i}"></div>
-    ${S.goals.length>1?`<button class="linkbtn" data-del="${i}">Удалить цель</button>`:''}
-  </div>`).join('');
-}
-$('goals').addEventListener('input',e=>{const t=e.target;if(!t.dataset.k)return;const g=S.goals[+t.dataset.g];
-  if(t.dataset.k==='name'){g.name=t.value;}else{g[t.dataset.k]=t.value.replace(/\D/g,'');t.value=fmtIn(g[t.dataset.k]);}
-  save();update();});
-$('goals').addEventListener('click',e=>{const d=e.target.dataset.del;if(d===undefined)return;S.goals.splice(+d,1);if(S.scGoal>=S.goals.length)S.scGoal=0;save();renderGoals();update();});
-$('addGoal').addEventListener('click',()=>{S.goals.push({name:'',cost:'',saved:'',months:''});save();renderGoals();update();});
-$('scGoal').addEventListener('change',e=>{S.scGoal=+e.target.value;save();update();});
 
-$('ideaList').innerHTML=IDEAS.map((t,i)=>`<label class="radio"><input type="checkbox" id="id${i}"> ${t}</label>`).join('');
-IDEAS.forEach((t,i)=>{const cb=$('id'+i);cb.checked=!!S.ideas[i];cb.addEventListener('change',()=>{S.ideas[i]=cb.checked;save();update();});});
-$('ideasYes').addEventListener('click',()=>{S.ideasOn=true;save();update();});
 // слайды «Как радость меняет доход». Для фото: photo:'файл.jpg', для видеокружка: video:'файл.mp4'
 const SLIDES=[
   {name:'Яна',city:'Москва',photo:'data:image/jpeg;base64,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',quote:'Думала, где заработать, — а оно само пришло в руки',text:'Повышение, доплата и подработка. Тревога за деньги ушла.'},
@@ -628,6 +564,35 @@ function cushionGap(c){const gap=c.cMonthly-c.over;
   const mm=c.over>0?Math.ceil(c.cLeft/c.over):0;
   return `<div class="verdict bad"><b>Чтобы копить в таком темпе, нужно увеличить доход на ${rub(gap)} в месяц</b>
     <span class="small">Есть и другой путь: увеличить срок${mm?` до ${mm} ${plural(mm,'месяца','месяцев','месяцев')} (тогда хватит дохода сверх базы)`:''}. Можно совместить оба варианта.</span></div>`;}
+function conclusions(c){
+  const pc=(a,b)=>b?Math.round(a/b*100):0;
+  const gap=c.base-c.earned,cushion=6*(c.exp+c.debt);
+  const flags=[];
+  if(c.earned&&c.exp>c.earned*0.45)flags.push(`🏠 Обязательные расходы — <b>${pc(c.exp,c.earned)}%</b> дохода вместо 45%.`);
+  if(c.earned&&c.debt>c.earned*0.20)flags.push(`💳 Платежи по долгам — <b>${pc(c.debt,c.earned)}%</b> дохода вместо 20%.`);
+  if(gap>0){
+    return {cta:'На бесплатной консультации Катя разберёт, где именно дисбаланс, и покажет, как поднять доход или снизить платежи, чтобы закрывались все конверты.',
+      html:`<div class="verdict bad"><b>⚠️ Денег не хватает: в бюджете дисбаланс</b>
+      <span class="small">Чтобы закрывались все пять конвертов, нужен доход не меньше <b>${rub(c.base)}</b> в месяц. Сейчас ${rub(c.earned)}.</span></div>
+      <div class="panel"><div class="k muted">Нужно поднять доход на</div><div class="huge" style="color:var(--danger)">${rub(gap)}<span style="font-size:.5em"> / мес</span></div>
+      <span class="small muted">Это +${pc(gap,c.earned)}% к текущему доходу.</span></div>
+      ${flags.length?`<div class="panel small">${flags.map(f=>`<div>${f}</div>`).join('')}</div>`:''}
+      <p class="note">Есть два пути, и их можно совместить: увеличить доход или снизить обязательные платежи, в первую очередь по кредитам.</p>`};
+  }
+  if(c.over>0){
+    return {cta:'На бесплатной консультации Катя поможет распределить излишек: сколько в подушку, сколько на цели и сколько в инвестиции.',
+      html:`<div class="verdict good"><b>✅ Денег хватает, и есть излишек</b>
+      <span class="small">Все пять конвертов закрываются, и сверх базы остаётся свободный ресурс.</span></div>
+      <div class="panel"><div class="k muted">Излишек сверх базы</div><div class="huge">${rub(c.over)}<span style="font-size:.5em"> / мес</span></div></div>
+      <div class="panel small"><div>Эти деньги важно правильно распределить, иначе они растворятся в повседневных тратах:
+      <br>🛡 <b>подушка безопасности</b> — ориентир ${rub(cushion)} (6 месяцев расходов и платежей);
+      <br>🎯 <b>накопления на цели</b>;
+      <br>📈 <b>инвестиции</b>, чтобы деньги работали на тебя.</div></div>`};
+  }
+  return {cta:'На бесплатной консультации Катя покажет, как вырасти в доходе, чтобы появились деньги на подушку, цели и инвестиции.',
+    html:`<div class="verdict good"><b>✅ Бюджет в балансе</b>
+    <span class="small">Доход ровно закрывает базу. Чтобы появились деньги на подушку, цели и инвестиции, следующий шаг — рост дохода.</span></div>`};
+}
 function update(){
   const c=calc();
   const done=[];
@@ -639,10 +604,8 @@ function update(){
   const joyAny=JOY.some((_,i)=>(S.joy[i]||{}).on)||S.joyCustom.some(x=>x.name||has(x.amt));
   done[3]=c.confirmed&&joyAny;
   done[4]=c.confirmed;
-  done[5]=c.confirmed&&has(S.cHave)&&c.cMonths>0;
-  done[6]=c.confirmed&&c.goals.some(g=>g.ok);
-  const s8open=c.confirmed&&(done[5]||done[6]);
-  done[7]=s8open&&!!S.scen;
+  const s6open=done[1];
+  done[5]=s6open;
 
   // 01
   const pOn=c.plan>0&&c.earned>=0&&has(S.plan);
@@ -707,71 +670,32 @@ function update(){
   if(c.confirmed){$('fFact').textContent=rub(c.earned);$('fBase').textContent=rub(c.base);$('fOver').textContent=rub(c.over);
     show('noDebt',c.debt===0);$('noDebtSum').textContent=rub(split(c.base)[1]);}
 
-  // 06
-  lock('s6lock',c.confirmed?'':needBase);show('s6body',c.confirmed);
-  if(c.confirmed){$('cTarget').textContent=rub(c.cTarget);$('cHaveOut').textContent=rub(c.cHave);$('cLeft').textContent=rub(c.cLeft);
-    $('cBar').style.width=(c.cTarget>0?Math.min(c.cHave/c.cTarget*100,100):0)+'%';
-    let h='';
-    if(c.cTarget===0)h='<p class="note">Обязательных расходов нет, поэтому ориентир подушки посчитать не из чего.</p>';
-    else if(c.cLeft===0)h='<div class="verdict good"><b>✅ Подушка собрана</b></div>';
-    else if(c.cMonths>0){const fit=c.cMonthly<=c.over;
-      h=`<div class="panel"><div class="k muted">Откладывать в подушку</div><div class="huge">${rub(c.cMonthly)}<span style="font-size:.5em"> / мес</span></div>
-      <div class="row small"><span class="k">Доход сверх базы</span><span class="v">${rub(c.over)}</span></div>
-      ${fit?'<span class="small green">✅ Помещается в доход сверх базы.</span>':cushionGap(c)}
-      <span class="small muted">💡 Пусть накопления работают на тебя: под сложный процент они растут сами. Как это работает, смотри в калькуляторе на шаге 08.</span></div>`;}
-    else h='<p class="note">Напиши срок, и я посчитаю ежемесячный взнос.</p>';
-    $('cRes').innerHTML=h;}
+  // 06 выводы
+  lock('s6lock',s6open?'':'Откроется, когда ты введёшь доход и обязательные расходы в шаге 02.');show('s6body',s6open);
+  if(s6open){const k=conclusions(c);$('concl').innerHTML=k.html;$('ctaText').textContent=k.cta;}
 
-  // 07
-  lock('s7lock',c.confirmed?'':needBase);show('s7body',c.confirmed);
-  if(c.confirmed)c.goals.forEach((g,i)=>{const el=$('gres'+i);if(!el)return;
-    el.innerHTML=g.funded?'<b class="green">✅ Цель уже профинансирована</b>':(g.ok?`<div class="ico-row"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5.5"/><circle cx="12" cy="12" r="2"/></svg></div><div><div class="k muted small">Нужно направлять на цель</div><div class="huge" style="font-size:30px">${rub(g.monthly)} / мес</div></div></div><div class="muted small">Осталось накопить: ${rub(g.left)}</div><span class="small muted">💡 Пусть накопления работают на тебя: под сложный процент они растут сами. Как это работает, смотри в калькуляторе на шаге 08.</span>`:'<span class="muted small">Заполни стоимость и срок.</span>');});
-
-  // 08
-  lock('s8lock',s8open?'':(c.confirmed?'Заполни подушку (шаг 06) или хотя бы одну цель (шаг 07).':needBase));show('s8body',s8open);
-  if(s8open){const okGoals=c.goals.map((g,i)=>({...g,i})).filter(g=>g.ok&&!g.funded);
-    $('scGoal').innerHTML=okGoals.map(g=>`<option value="${g.i}" ${g.i===S.scGoal?'selected':''}>${g.name}</option>`).join('');
-    show('scGoalWrap',okGoals.length>1);
-    const sg=okGoals.find(g=>g.i===S.scGoal)||okGoals[0];
-    const cm=c.cLeft>0&&c.cMonths>0?c.cMonthly:0;
-    const sc=[['A','Базовая жизнь','База и пять конвертов, без дополнительных взносов.',0]];
-    if(cm)sc.push(['Б','База + подушка','Формируем резерв.',cm]);
-    if(cm&&sg)sc.push(['В','База + подушка + цель',`Подушка и «${sg.name}».`,cm+sg.monthly]);
-    if(sg)sc.push(['Г','База + цель без подушки',`Только «${sg.name}». Резерв при этом не растёт.`,sg.monthly]);
-    if(okGoals.length>1)sc.push(['Д','База + все цели',(cm?'Подушка и ':'')+'все цели сразу.',cm+okGoals.reduce((a,g)=>a+g.monthly,0)]);
-    $('scens').innerHTML=sc.map(s=>{const diff=c.over-s[3];return `<div class="scen ${S.scen===s[0]?'sel':''}" data-s="${s[0]}">
-      <div class="scen-top"><label class="radio"><input type="radio" name="scen" ${S.scen===s[0]?'checked':''} aria-label="${s[1]}"></label><b>${s[0]} · ${s[1]}</b></div>
-      <span class="note">${s[2]}</span>
-      <div class="row small"><span class="k">Нагрузка в месяц</span><span class="v">${rub(s[3])}</span></div>
-      <div><span class="pill ${diff>=0?'ok':'no'}">${diff>=0?'Помещается, запас '+rub(diff):'Не хватает '+rub(-diff)+' в месяц'}</span></div></div>`;}).join('');
-    document.querySelectorAll('.scen').forEach(el=>el.onclick=()=>{S.scen=el.dataset.s;if(!S.offerAt)S.offerAt=Date.now();save();update();});
-    const ch=sc.find(s=>s[0]===S.scen);
-    show('next',!!ch);
-    if(ch){const diff=c.over-ch[3];$('nextTitle').textContent='Твой выбор: '+ch[0]+' · '+ch[1];
-      $('nextText').textContent=diff>=0?'Нагрузка помещается в доход сверх базы. Перед каждым взносом сверяйся с реальным остатком на карте.':'Чтобы этот вариант заработал, в месяц нужно ещё '+rub(-diff)+'. Можно продлить сроки, оставить одну цель или найти дополнительный доход. С последним Катя может помочь на консультации.';
-      show('ideasAsk',!S.ideasOn);show('ideas',S.ideasOn);$('ideaCount').textContent='Выбрано: '+IDEAS.filter((_,i)=>S.ideas[i]).length+' из '+IDEAS.length;
-      const left=S.offerAt?3*3600e3-(Date.now()-S.offerAt):0;
-      const act=S.course&&S.course.on;
-      $('courseTimer').textContent=act?'':(left>0?'Бесплатное участие можно активировать ещё '+Math.floor(left/3600e3)+' ч '+Math.floor(left%3600e3/60e3)+' мин.':'Время бесплатного участия истекло.');
-      $('coursePrice').innerHTML=act?'<s>990 ₽</s> <span class="green">0 ₽</span>':'990 ₽';
-      $('actBtn').hidden=act||left<=0||!$('actForm').hidden;
-      $('actDone').hidden=!act;
-      if(act){$('actDoneText').textContent='✅ '+S.course.name+', бесплатное участие активировано!';
-        $('actGo').href='https://t.me/katyafinanc?text='+encodeURIComponent('КУХНЯ\nАктивировал(а) бесплатное участие по промокоду из навигатора.\nИмя: '+S.course.name+'\nTelegram: '+S.course.tg);}
-      invest();}
-  }
+  // курс и калькулятор доступны сразу
+  if(!S.offerAt){S.offerAt=Date.now();save();}
+  const left=3*3600e3-(Date.now()-S.offerAt);
+  const act=S.course&&S.course.on;
+  $('courseTimer').textContent=act?'':(left>0?'Бесплатное участие можно активировать ещё '+Math.floor(left/3600e3)+' ч '+Math.floor(left%3600e3/60e3)+' мин.':'Время бесплатного участия истекло.');
+  $('coursePrice').innerHTML=act?'<s>990 ₽</s> <span class="green">0 ₽</span>':'990 ₽';
+  $('actBtn').hidden=act||left<=0||!$('actForm').hidden;
+  $('actDone').hidden=!act;
+  if(act){$('actDoneText').textContent='✅ '+S.course.name+', бесплатное участие активировано!';
+    $('actGo').href='https://t.me/katyafinanc?text='+encodeURIComponent('КУХНЯ\nАктивировал(а) бесплатное участие по промокоду из навигатора.\nИмя: '+S.course.name+'\nTelegram: '+S.course.tg);}
+  invest();
 
   done.forEach((d,i)=>{if(d)track('step'+(i+1));});
   // маршрут
-  const unlocked=[true,done[0],s3open,c.confirmed,c.confirmed,c.confirmed,c.confirmed,s8open];
-  let cur=done.findIndex((d,i)=>!d&&unlocked[i]);if(cur<0)cur=7;
+  const unlocked=[true,done[0],s3open,c.confirmed,c.confirmed,s6open];
+  let cur=done.findIndex((d,i)=>!d&&unlocked[i]);if(cur<0)cur=STEPS.length-1;
   $('chips').innerHTML=STEPS.map((t,i)=>`<button class="chip ${done[i]?'done':''} ${i===cur?'now':''} ${unlocked[i]?'':'locked'}" data-i="${i}">${done[i]?'✓ ':''}${t}</button>`).join('');
-  const n=done.filter(Boolean).length;$('routeBar').style.width=n/8*100+'%';
-  $('routeText').textContent='Пройдено '+n+' из 8';$('routeNext').textContent=n===8?'Маршрут пройден 🎉':'Сейчас: '+STEPS[cur];
-  window.__sum=()=>{const gs=c.goals.filter(g=>g.cost>0),gSaved=gs.reduce((a,g)=>a+g.saved,0);return ['Привет, Катя! Хочу бесплатный финансовый вердикт.','',
+  const n=done.filter(Boolean).length;$('routeBar').style.width=n/STEPS.length*100+'%';
+  $('routeText').textContent='Пройдено '+n+' из '+STEPS.length;$('routeNext').textContent=n===STEPS.length?'Маршрут пройден 🎉':'Сейчас: '+STEPS[cur];
+  window.__sum=()=>['Привет, Катя! Хочу записаться на бесплатную консультацию.','',
     'Доход в месяц: '+rub(c.earned),'Обязательные расходы: '+rub(c.exp),'Платежи по долгам: '+rub(c.debt),
-    'Сбережения: подушка безопасности '+rub(c.cHave)+', на цели '+rub(gSaved),
-    gs.length?'Цели: '+gs.map(g=>g.name+' — '+rub(g.cost)+(g.m?' за '+g.m+' мес.':'')).join('; '):'Цели: пока не поставлены'].join('\n');};
+    'Базовый уровень: '+rub(c.base),c.base>c.earned?'Итог: не хватает '+rub(c.base-c.earned)+' в месяц':'Итог: излишек '+rub(c.over)+' в месяц'].join('\n');
   $('sendVerdict').href='https://t.me/Katyafinanc?text='+encodeURIComponent(window.__sum());
 }
 $('chips').addEventListener('click',e=>{const i=e.target.closest('.chip')?.dataset.i;if(i!==undefined)$('s'+(+i+1)).scrollIntoView({behavior:'smooth'});});
@@ -791,7 +715,7 @@ document.addEventListener('click',e=>{const a=e.target.closest('a,button');if(!a
   else if(a.href&&a.href.includes('Katyacoach'))track('coach_click');else if(a.href&&a.href.includes('%D0%9F%D0%9E%D0%A0%D0%A2%D0%A4%D0%95%D0%9B%D0%AC'))track('portfolio_click');},true);
 const aboutEl=$('about');if(aboutEl&&'IntersectionObserver' in window){const io=new IntersectionObserver(es=>{if(es.some(x=>x.isIntersecting)){track('about_seen');io.disconnect();}});io.observe(aboutEl);}
 
-renderGoals();renderJoyCustom();update();
+renderJoyCustom();update();
 })();
 </script>
 </body></html>

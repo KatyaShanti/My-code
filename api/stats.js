@@ -24,7 +24,7 @@ module.exports = async (req, res) => {
   const today = Object.fromEntries(EVENTS.map(([k], ei) => [k, Number(values[ei]) || 0]));
 
   const visits = total.visit;
-  const funnel = EVENTS.slice(0, 9);
+  const funnel = EVENTS.filter(([k]) => k === 'visit' || /^step\d+$/.test(k));
   const rows = funnel.map(([k, label], i) => {
     const prev = i ? total[funnel[i - 1][0]] : total[k];
     const w = visits ? Math.round((total[k] / visits) * 100) : 0;
@@ -32,7 +32,7 @@ module.exports = async (req, res) => {
       <td class="n ${i && prev && total[k] / prev < 0.5 ? 'bad' : ''}">${i ? pct(total[k], prev) : ''}</td>
       <td class="bar"><i style="width:${w}%"></i></td><td class="n muted">${today[k]}</td></tr>`;
   }).join('');
-  const extra = EVENTS.slice(9).map(([k, label]) =>
+  const extra = EVENTS.filter(([k]) => k !== 'visit' && !/^step\d+$/.test(k)).map(([k, label]) =>
     `<tr><td>${esc(label)}</td><td class="n">${total[k]}</td><td class="n">${pct(total[k], visits)}</td><td></td><td></td><td class="n muted">${today[k]}</td></tr>`).join('');
 
   const link = (d) => `?key=${encodeURIComponent(secret)}&days=${d}`;
