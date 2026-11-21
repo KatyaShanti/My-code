@@ -7,21 +7,31 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700&display=swap">
 <style>
 /* Layout: одна узкая колонка, форма как письмо. Фиолетовый акцент из палитры Кати. */
-:root {   /* 21.11 Катя: вся страница в фиолетовом, без белого, у всех одинаково (тёмная/светлая тема телефона не влияет) */
-  --bg: #3a1f50;
-  --card: #4a2866;
-  --fg: #f6eefc;
-  --muted: #d9c6ea;
-  --line: #6b468c;
-  --accent: #c79be3;
-  --accent-fg: #2a1238;
-  --accent-soft: #5a3479;
-  --danger: #ffb4ab;
+:root {
+  --bg: #f6f4f8;
+  --card: #ffffff;
+  --fg: #231c2b;
+  --muted: #6b6277;
+  --line: #ded8e6;
+  --accent: #7a3e9d;
+  --accent-fg: #ffffff;
+  --accent-soft: #efe6f5;
+  --danger: #b3261e;
   --font-head: "Manrope", "Segoe UI", system-ui, sans-serif;
   --font-body: "Inter", "Segoe UI", system-ui, sans-serif;
-  color-scheme: dark;
 }
-input, textarea { background: #331a47 !important; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #17131c; --card: #211b29; --fg: #f1ecf6; --muted: #a79eb4;
+    --line: #382f45; --accent: #c79be3; --accent-fg: #1b1223; --accent-soft: #2c2238;
+    --danger: #ff8a80; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #17131c; --card: #211b29; --fg: #f1ecf6; --muted: #a79eb4;
+  --line: #382f45; --accent: #c79be3; --accent-fg: #1b1223; --accent-soft: #2c2238;
+  --danger: #ff8a80; color-scheme: dark;
+}
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
 body {
