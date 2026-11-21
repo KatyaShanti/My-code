@@ -86,6 +86,9 @@ button:disabled { opacity: 0.6; cursor: default; }
     <label for="f-tg">Ваш Telegram
       <input id="f-tg" name="telegram" type="text" placeholder="@username" autocapitalize="none" required>
     </label>
+    <label for="f-phone">Ваш телефон
+      <input id="f-phone" name="phone" type="tel" placeholder="+7 900 000-00-00" autocomplete="tel" inputmode="tel" required>
+    </label>
     <label for="f-request">Какой у вас основной запрос или проблема
       <textarea id="f-request" name="request" required></textarea>
     </label>
@@ -107,7 +110,7 @@ button:disabled { opacity: 0.6; cursor: default; }
     <h2>Спасибо, анкета принята</h2>
     <p>Когда откроется окно и снова появятся бесплатные места, я сообщу вам. Вы узнаете об этом в первую очередь.</p>
     <p>Если хотите записаться на платную консультацию, пишите мне в Telegram:</p>
-    <a class="tg" href="https://t.me/katya_couch" target="_blank" rel="noopener">Катя Коуч</a>
+    <a class="tg" href="https://t.me/katyacoach" target="_blank" rel="noopener">Написать мне в Telegram</a>
   </section>
 </main>
 
@@ -117,8 +120,12 @@ button:disabled { opacity: 0.6; cursor: default; }
   var err = document.getElementById("err");
   var send = document.getElementById("send");
   var thanks = document.getElementById("thanks");
-  var labels = { name: "имя", city: "город", telegram: "Telegram", request: "основной запрос", since: "как давно", tried: "что пробовали", result: "что будет, если решится" };
-  function fail(msg) { err.textContent = msg; err.hidden = false; }
+  var labels = { name: "имя", city: "город", telegram: "Telegram", phone: "телефон", request: "основной запрос", since: "как давно", tried: "что пробовали", result: "что будет, если решится" };
+  function fail(msg, link) {
+    err.textContent = msg;
+    if (link) { var a = document.createElement("a"); a.href = "https://t.me/katyacoach"; a.target = "_blank"; a.rel = "noopener"; a.textContent = "напишите мне в Telegram"; err.append(" ", a, "."); }
+    err.hidden = false;
+  }
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
     err.hidden = true;
@@ -140,7 +147,7 @@ button:disabled { opacity: 0.6; cursor: default; }
     } catch (x) {
       send.disabled = false;
       send.textContent = "Отправить";
-      fail("Не получилось отправить анкету. Попробуйте ещё раз или напишите мне в Telegram: Катя Коуч (@katya_couch).");
+      fail("Не получилось отправить анкету. Попробуйте ещё раз или", true);
     }
   });
 })();
