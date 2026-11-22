@@ -566,24 +566,27 @@ function cushionGap(c){const gap=c.cMonthly-c.over;
     <span class="small">Есть и другой путь: увеличить срок${mm?` до ${mm} ${plural(mm,'месяца','месяцев','месяцев')} (тогда хватит дохода сверх базы)`:''}. Можно совместить оба варианта.</span></div>`;}
 function conclusions(c){
   const pc=(a,b)=>b?Math.round(a/b*100):0;
-  const gap=c.strict-c.earned,over=Math.max(c.earned-c.strict,0),cushion=6*(c.exp+c.debt);
+  const gap=c.base-c.earned,over=Math.max(c.earned-c.base,0),cushion=6*(c.exp+c.debt);
+  const comboNote=c.combo?`<div class="panel small"><div>🎯 Цель скорректирована: свободный остаток текущих расходов идёт на долги. Поэтому базовый доход — ${rub(c.base)}, а не ${rub(c.strict)}.</div></div>`:'';
   const flags=[];
   if(c.earned&&c.exp>c.earned*0.45)flags.push(`🏠 Обязательные расходы — <b>${pc(c.exp,c.earned)}%</b> дохода вместо 45%.`);
   if(c.earned&&c.debt>c.earned*0.20)flags.push(`💳 Платежи по долгам — <b>${pc(c.debt,c.earned)}%</b> дохода вместо 20%.`);
   if(gap>0){
     return {cta:'На бесплатной консультации Катя разберёт, где именно дисбаланс, и покажет, как поднять доход или снизить платежи, чтобы закрывались все конверты.',
       html:`<div class="verdict bad"><b>⚠️ Денег не хватает: в бюджете дисбаланс</b>
-      <span class="small">Чтобы закрывались все пять конвертов, нужен доход не меньше <b>${rub(c.strict)}</b> в месяц. Сейчас ${rub(c.earned)}.</span></div>
+      <span class="small">Чтобы закрывались все пять конвертов, нужен доход не меньше <b>${rub(c.base)}</b> в месяц. Сейчас ${rub(c.earned)}.</span></div>
+      ${comboNote}
       <div class="panel"><div class="k muted">Нужно поднять доход на</div><div class="huge" style="color:var(--danger)">${rub(gap)}<span style="font-size:.5em"> / мес</span></div>
       <span class="small muted">Это +${pc(gap,c.earned)}% к текущему доходу.</span></div>
       ${flags.length?`<div class="panel small">${flags.map(f=>`<div>${f}</div>`).join('')}</div>`:''}
-      ${c.debtLed&&c.bC<=c.earned?`<p class="note">Если переводить свободный остаток текущих расходов на долги, конверты закроются уже при доходе ${rub(c.bC)}. Это временное решение: платежи по долгам всё равно стоит снизить.</p>`:''}
+      ${!c.combo&&c.debtLed&&c.bC<=c.earned?`<p class="note">Если переводить свободный остаток текущих расходов на долги, конверты закроются уже при доходе ${rub(c.bC)}. Это временное решение: платежи по долгам всё равно стоит снизить.</p>`:''}
       <p class="note">Есть два пути, и их можно совместить: увеличить доход или снизить обязательные платежи, в первую очередь по кредитам.</p>`};
   }
   if(over>0){
     return {cta:'На бесплатной консультации Катя поможет распределить излишек: сколько в подушку, сколько на цели и сколько в инвестиции.',
       html:`<div class="verdict good"><b>✅ Денег хватает, и есть излишек</b>
       <span class="small">Все пять конвертов закрываются, и сверх базы остаётся свободный ресурс.</span></div>
+      ${comboNote}${c.combo&&flags.length?`<div class="panel small">${flags.map(f=>`<div>${f}</div>`).join('')}<div>Платежи по долгам всё равно стоит снизить.</div></div>`:''}
       <div class="panel"><div class="k muted">Излишек сверх базы</div><div class="huge">${rub(over)}<span style="font-size:.5em"> / мес</span></div></div>
       <div class="panel small"><div>Эти деньги важно правильно распределить, иначе они растворятся в повседневных тратах:
       <br>🛡 <b>подушка безопасности</b> — ориентир ${rub(cushion)} (6 месяцев расходов и платежей);
@@ -696,7 +699,7 @@ function update(){
   $('routeText').textContent='Пройдено '+n+' из '+STEPS.length;$('routeNext').textContent=n===STEPS.length?'Маршрут пройден 🎉':'Сейчас: '+STEPS[cur];
   window.__sum=()=>['Привет, Катя! Хочу записаться на бесплатную консультацию.','',
     'Доход в месяц: '+rub(c.earned),'Обязательные расходы: '+rub(c.exp),'Платежи по долгам: '+rub(c.debt),
-    'Базовый уровень: '+rub(c.base),c.strict>c.earned?'Итог: не хватает '+rub(c.strict-c.earned)+' в месяц':'Итог: излишек '+rub(c.earned-c.strict)+' в месяц'].join('\n');
+    'Базовый уровень: '+rub(c.base),c.base>c.earned?'Итог: не хватает '+rub(c.base-c.earned)+' в месяц':'Итог: излишек '+rub(c.earned-c.base)+' в месяц'].join('\n');
   $('sendVerdict').href='https://t.me/Katyafinanc?text='+encodeURIComponent(window.__sum());
 }
 $('chips').addEventListener('click',e=>{const i=e.target.closest('.chip')?.dataset.i;if(i!==undefined)$('s'+(+i+1)).scrollIntoView({behavior:'smooth'});});
