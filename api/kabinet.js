@@ -1,5 +1,5 @@
 // Личный кабинет Кати: одна страница со всеми счётчиками (22.11 просьба Кати).
-// Вход по паролю STATS_KEY. Под каждой ссылкой — сколько людей за 30 дней и за всё время.
+// Вход по паролю KABINET_PASSWORD (22.11 Катя выбрала простой) или STATS_KEY. Под каждой ссылкой — сколько людей за 30 дней и за всё время.
 // Сайт программы считает сам (база Neon) и отдаёт две цифры по ключу HUB_KEY: PROGRAM_URL/api/summary.
 const { configured, pipeline, day } = require('./_store');
 
@@ -47,7 +47,8 @@ module.exports = async (req, res) => {
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
   const secret = process.env.STATS_KEY;
   const given = String(req.query.key || '');
-  if (!secret || given !== secret) {
+  const pass = (process.env.KABINET_PASSWORD || '').trim();
+  if (!secret || !given || (given !== secret && given !== pass)) {
     return res.status(given ? 401 : 200).send(page(`<h1>Личный кабинет</h1><p class="sub">Все счётчики на одной странице.</p>
 <form method="get"><input type="password" name="key" id="k" placeholder="Пароль" autocomplete="current-password" required><button>Войти</button></form>
 ${given ? '<p class="err">Пароль не подошёл.</p>' : ''}
@@ -70,7 +71,7 @@ ${given ? '<p class="err">Пароль не подошёл.</p>' : ''}
   const card = (href, title, lines, ext) => `<a class="card" href="${href}"${ext ? ' target="_blank" rel="noopener"' : ''}><span class="go">Открыть →</span><b>${esc(title)}</b>${lines}</a>`;
 
   res.status(200).send(page(`<h1>Личный кабинет</h1><p class="sub">Все счётчики на одной странице. «За месяц» — последние 30 дней.</p>
-${card(`${PROGRAM}/stats`, 'Программа курса «От хаоса к порядку»', line('Зашли на сайт', pr) + '<div class="small">Счётчик откроется со своим паролем.</div>', true)}
+${card(`${PROGRAM}/stats`, 'Программа курса «От хаоса к порядку»', line('Зашли на сайт', pr) + '<div class="small">Пароль тот же, что здесь.</div>', true)}
 ${card(`/api/stats?key=${q}&days=30`, 'Приложение «Финансы на кухне»', line('Открыли навигатор', nav))}
 ${card(`/api/course?key=${q}&p=30`, 'Мини-курс «Финансы на кухне» в боте', line('Начали курс', { month: started('30'), total: started('all') }))}
 ${card(`/api/stats?key=${q}&f=ank&days=30`, 'Анкета предзаписи на разборы 2027', line('Открыли анкету', ank) + line('Анкета дошла', sent) + '<div class="small">Считаем с 22.11.2026.</div>')}
