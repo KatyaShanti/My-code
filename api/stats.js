@@ -1,6 +1,6 @@
 // Отчёт по воронке. Открывается только по секретной ссылке: /api/stats?key=STATS_KEY&days=7
 const { configured, pipeline, day } = require('./_store');
-const EVENTS = require('./_events');
+const FUNNELS = require('./_funnels');
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const pct = (a, b) => (b ? `${Math.round((a / b) * 100)}%` : '—');
@@ -10,12 +10,14 @@ module.exports = async (req, res) => {
   if (!secret || req.query.key !== secret) return res.status(404).send('Not found');
   if (!configured()) return res.status(500).send('Хранилище не подключено: Vercel → Storage → Upstash for Redis.');
 
+  const f = req.query.f === 'ank' ? 'ank' : 'fnk';   // ?f=ank — счётчик анкеты предзаписи
+  const { title, events: EVENTS } = FUNNELS[f];
   const days = Math.min(Math.max(parseInt(req.query.days, 10) || 7, 1), 365);
   const dates = Array.from({ length: days }, (_, i) => day(new Date(Date.now() - i * 864e5)));
 
   let values;
   try {
-    values = await pipeline(dates.flatMap((d) => EVENTS.map(([k]) => ['GET', `fnk:${d}:${k}`])));
+    values = await pipeline(dates.flatMap((d) => EVENTS.map(([k]) => ['GET', `${f}:${d}:${k}`])));
   } catch {
     return res.status(502).send('Не удалось прочитать счётчики');
   }
@@ -35,12 +37,12 @@ module.exports = async (req, res) => {
   const extra = EVENTS.filter(([k]) => k !== 'visit' && !/^step\d+$/.test(k)).map(([k, label]) =>
     `<tr><td>${esc(label)}</td><td class="n">${total[k]}</td><td class="n">${pct(total[k], visits)}</td><td></td><td></td><td class="n muted">${today[k]}</td></tr>`).join('');
 
-  const link = (d) => `?key=${encodeURIComponent(secret)}&days=${d}`;
+  const link = (d) => `?key=${encodeURIComponent(secret)}${f === 'ank' ? '&f=ank' : ''}&days=${d}`;
   res.setHeader('Cache-Control', 'no-store');
   res.setHeader('X-Robots-Tag', 'noindex');
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
   res.status(200).send(`<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Воронка навигатора</title><style>
+<title>${esc(title)}</title><style>
 body{margin:0;background:#0B0D0C;color:#EEF3F0;font:15px/1.4 system-ui,sans-serif;padding:20px 16px}
 h1{font-size:22px;margin:0 0 4px}p{color:#93A39A;margin:0 0 16px}
 nav{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}nav a{color:#EEF3F0;border:1px solid #2C3530;border-radius:999px;padding:6px 14px;text-decoration:none}
@@ -50,11 +52,12 @@ th,td{padding:10px 8px;border-bottom:1px solid #2C3530;text-align:left}th{color:
 .n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}.muted{color:#93A39A}.bad{color:#EF6A5F;font-weight:600}
 .bar{width:28%}.bar i{display:block;height:10px;border-radius:5px;background:#5DB58C}
 h2{font-size:17px;margin:24px 0 8px}</style></head><body>
-<h1>Воронка навигатора «Финансы на кухне»</h1>
+<p><a href="/api/kabinet?key=${encodeURIComponent(secret)}" style="color:#93A39A">← Личный кабинет</a></p>
+<h1>${esc(title)}</h1>
 <p>Уникальные люди за ${days} дн. Красным — шаги, где отваливается больше половины.</p>
 <nav>${[1, 7, 30, 90].map((d) => `<a class="${d === days ? 'on' : ''}" href="${link(d)}">${d === 1 ? 'Сегодня' : d + ' дн.'}</a>`).join('')}</nav>
 <div class="wrap"><table><tr><th>Шаг</th><th class="n">Людей</th><th class="n">От входа</th><th class="n">От прошлого</th><th></th><th class="n">Сегодня</th></tr>${rows}</table></div>
-<h2>Действия</h2>
-<div class="wrap"><table><tr><th>Действие</th><th class="n">Людей</th><th class="n">От входа</th><th></th><th></th><th class="n">Сегодня</th></tr>${extra}</table></div>
+${extra ? `<h2>Действия</h2>
+<div class="wrap"><table><tr><th>Действие</th><th class="n">Людей</th><th class="n">От входа</th><th></th><th></th><th class="n">Сегодня</th></tr>${extra}</table></div>` : ''}
 </body></html>`);
 };
